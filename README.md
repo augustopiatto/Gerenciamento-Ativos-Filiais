@@ -32,6 +32,8 @@ O projeto inclui as seguintes tecnologias:
 - Vite para desenvolvimento e construção rápidos e eficientes
 - Highcharts como biblioteca de gráficos.
 - Ant Design como biblioteca para UI.
+- Axios para chamadas HTTP.
+- React router DOM para Client Side Routing.
 - STORYBOOK?
 - VITEST?
 

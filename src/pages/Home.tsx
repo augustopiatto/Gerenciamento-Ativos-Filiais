@@ -1,5 +1,9 @@
 import React from "react";
 import { api } from "../api/axios";
+import { Link } from "react-router-dom";
+
+// Todos dados estão relacionados às empresas, vou ter que fazer a busca dos dados secundários
+// a partir da empresa
 
 function Home() {
   const [companies, setCompanies] = React.useState<
@@ -31,7 +35,7 @@ function Home() {
         {!!Object.keys(companies).length &&
           companies.map((company) => (
             <li key={company.id}>
-              <h2>{company.name}</h2>
+              <Link to={`company/${company.id}`}>{company.name}</Link>
             </li>
           ))}
       </ul>
