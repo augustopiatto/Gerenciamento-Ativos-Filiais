@@ -1,0 +1,18 @@
+.container {
+  max-width: 800px;
+  padding: 0 16px;
+  margin: 0 auto;
+}
+
+.mainContainer {
+  margin-top: 32px;
+}
+
+.title {
+  font-family: var(--type-second);
+  line-height: 1;
+  font-size: 48px;
+  margin: 16px 0;
+  position: relative;
+  z-index: 1;
+}

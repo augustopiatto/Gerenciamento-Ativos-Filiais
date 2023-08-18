@@ -14,7 +14,6 @@ function Home() {
     try {
       const response = await api.get("companies");
       setCompanies(response.data);
-      console.log(response.data);
     } catch (error) {
       console.log(error);
     }
@@ -35,7 +34,12 @@ function Home() {
         {!!Object.keys(companies).length &&
           companies.map((company) => (
             <li key={company.id}>
-              <Link to={`company/${company.id}`}>{company.name}</Link>
+              <Link
+                to={`company/${company.id}`}
+                state={{ companyName: company.name }}
+              >
+                {company.name}
+              </Link>
             </li>
           ))}
       </ul>

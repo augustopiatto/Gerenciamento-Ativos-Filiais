@@ -5,18 +5,14 @@ import NotFound from "./pages/NotFound.tsx";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 function App() {
-  const id: number = 1;
-
   return (
-    <div>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="company/:id" element={<Company companyName={id} />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="company/:id" element={<Company />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
