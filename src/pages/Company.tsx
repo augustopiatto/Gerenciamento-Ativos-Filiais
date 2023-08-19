@@ -184,6 +184,13 @@ function Company() {
           </Button>
         </div>
       )}
+      <div>
+        as informações da empresa aqui, com quantos funcionarios tem, quais as
+        unidades, qtd de funcionario por unidade, quais ordens de servico, ordem
+        de servico por usuario, etc. Pra isso, tem que chamar todas APIs, exceto
+        dos ativos quando carregar essa pagina, e ai usar TS pra trabalhar com
+        essas infos
+      </div>
       <HighchartsReact
         highcharts={Highcharts}
         options={options}
