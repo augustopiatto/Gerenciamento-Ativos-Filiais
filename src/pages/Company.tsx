@@ -4,75 +4,17 @@ import React, { useRef } from "react";
 import { useNavigate, useParams } from "react-router";
 import * as Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
+import Users from "../components/Users.tsx";
+import {
+  AssetsInterface,
+  CompanyInterface,
+  UnitsInterface,
+  UsersInterface,
+  WorkordersInterface,
+} from "../commons/types.tsx";
 
 interface ParamsInfos {
   id: string;
-}
-
-interface Company {
-  id?: number;
-  name?: string;
-}
-
-interface HealthHistory {
-  status: string;
-  timestamp: string;
-}
-
-interface Metrics {
-  lastUptimeAt: string;
-  totalCollectsUptime: number;
-  totalUptime: number;
-}
-
-interface Specifications {
-  maxTemp: number;
-}
-
-interface Assets {
-  assignedUserIds: number[];
-  companyId: number;
-  healthHistory: HealthHistory[];
-  healthscore: number;
-  id: number;
-  image: string;
-  metrics: Metrics;
-  model: string;
-  name: string;
-  sensors: string[];
-  specifications: Specifications;
-  status: string;
-  unitId: number;
-}
-
-interface Users {
-  companyId: number;
-  email: string;
-  id: number;
-  name: string;
-  unitId: number;
-}
-
-interface Units {
-  companyId: number;
-  id: number;
-  name: string;
-}
-
-interface Checklist {
-  completed: boolean;
-  task: string;
-}
-
-interface Workorders {
-  assetId: number;
-  assignedUserIds: number[];
-  checklist: Checklist[];
-  description: string;
-  id: number;
-  priority: string;
-  status: string;
-  title: string;
 }
 
 const options: Highcharts.Options = {
@@ -92,11 +34,11 @@ function Company() {
 
   const { id }: ParamsInfos = useParams();
   const companyId: number = parseInt(id);
-  const [company, setCompany] = React.useState<Company>({});
-  const [assets, setAssets] = React.useState<Assets[]>([]);
-  const [users, setUsers] = React.useState<Users[]>([]);
-  const [units, setUnits] = React.useState<Units[]>([]);
-  const [workorders, setWorkorders] = React.useState<Workorders[]>([]);
+  const [company, setCompany] = React.useState<CompanyInterface>({});
+  const [assets, setAssets] = React.useState<AssetsInterface[]>([]);
+  const [units, setUnits] = React.useState<UnitsInterface[]>([]);
+  const [users, setUsers] = React.useState<UsersInterface[]>([]);
+  const [workorders, setWorkorders] = React.useState<WorkordersInterface[]>([]);
 
   const unitMap = new Map<number, string>();
 
@@ -120,14 +62,14 @@ function Company() {
         console.log(error);
       }
       if (usersResponse) {
-        const companyUsers: Users[] = usersResponse.data.filter(
-          (user: Users) => user.companyId === companyId
+        const companyUsers: UsersInterface[] = usersResponse.data.filter(
+          (user: UsersInterface) => user.companyId === companyId
         );
         setUsers(companyUsers);
       }
       if (unitsResponse) {
-        const companyUnits: Units[] = unitsResponse.data.filter(
-          (unit: Units) => unit.companyId === companyId
+        const companyUnits: UnitsInterface[] = unitsResponse.data.filter(
+          (unit: UnitsInterface) => unit.companyId === companyId
         );
         setUnits(companyUnits);
         await companyUnits.forEach((unit) => {
@@ -218,16 +160,7 @@ function Company() {
         {!!units.length &&
           units.map((unit) => <li key={unit.id}>{unit.name}</li>)}
       </ul>
-      <h2>Usuários</h2>
-      <ul>
-        {!!users.length &&
-          users.map((user) => (
-            <li key={user.id}>
-              {user.name} - {user.email} - {user.unitId} -{" "}
-              {unitMap.get(user.unitId)}
-            </li>
-          ))}
-      </ul>
+      <Users users={users} />
       <h2>Ordens de serviço</h2>
       <ul>
         {!!workorders.length &&
