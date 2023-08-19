@@ -66,7 +66,7 @@ interface Checklist {
 
 interface Workorders {
   assetId: number;
-  assignedUsersIds: number[];
+  assignedUserIds: number[];
   checklist: Checklist[];
   description: string;
   id: number;
@@ -98,17 +98,44 @@ function Company() {
   const [units, setUnits] = React.useState<Units[]>([]);
   const [workorders, setWorkorders] = React.useState<Workorders[]>([]);
 
-  const getCompany = React.useCallback(
+  const unitMap = new Map<number, string>();
+
+  const getCompanyInfos = React.useCallback(
     async function (): Promise<void> {
+      let usersResponse;
+      let unitsResponse;
+      let workordersResponse;
       try {
         const response = await api.get("companies", companyId);
         if (!response.data.length) {
           navigate("/*");
         }
         setCompany(response.data[0]);
+        [usersResponse, unitsResponse, workordersResponse] = await Promise.all([
+          api.get("users").catch(() => console.log("usersError")),
+          api.get("units").catch(() => console.log("unitsError")),
+          api.get("workorders").catch(() => console.log("workordersError")),
+        ]);
       } catch (error) {
         console.log(error);
       }
+      if (usersResponse) {
+        const companyUsers: Users[] = usersResponse.data.filter(
+          (user: Users) => user.companyId === companyId
+        );
+        setUsers(companyUsers);
+      }
+      if (unitsResponse) {
+        const companyUnits: Units[] = unitsResponse.data.filter(
+          (unit: Units) => unit.companyId === companyId
+        );
+        setUnits(companyUnits);
+        await companyUnits.forEach((unit) => {
+          unitMap.set(unit.id, unit.name);
+        });
+        console.log(unitMap.get(1));
+      }
+      if (workordersResponse) setWorkorders(workordersResponse.data);
     },
     [navigate, companyId]
   );
@@ -126,48 +153,48 @@ function Company() {
     }
   }
 
-  async function getUsers() {
-    try {
-      const response = await api.get("users");
-      if (!response.data.length) {
-        navigate("/*");
-      }
-      setUsers(response.data[0]);
-      console.log("users", users);
-    } catch (error) {
-      console.log(error);
-    }
-  }
+  // async function getUsers() {
+  //   try {
+  //     const response = await api.get("users");
+  //     if (!response.data.length) {
+  //       navigate("/*");
+  //     }
+  //     setUsers(response.data[0]);
+  //     console.log("users", users);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
 
-  async function getUnits() {
-    try {
-      const response = await api.get("units");
-      if (!response.data.length) {
-        navigate("/*");
-      }
-      setUnits(response.data[0]);
-      console.log("units", units);
-    } catch (error) {
-      console.log(error);
-    }
-  }
+  // async function getUnits() {
+  //   try {
+  //     const response = await api.get("units");
+  //     if (!response.data.length) {
+  //       navigate("/*");
+  //     }
+  //     setUnits(response.data[0]);
+  //     console.log("units", units);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
 
-  async function getWorkorders() {
-    try {
-      const response = await api.get("workorders");
-      if (!response.data.length) {
-        navigate("/*");
-      }
-      setWorkorders(response.data[0]);
-      console.log("workorders", workorders);
-    } catch (error) {
-      console.log(error);
-    }
-  }
+  // async function getWorkorders() {
+  //   try {
+  //     const response = await api.get("workorders");
+  //     if (!response.data.length) {
+  //       navigate("/*");
+  //     }
+  //     setWorkorders(response.data[0]);
+  //     console.log("workorders", workorders);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
 
   React.useEffect(() => {
-    getCompany();
-  }, [getCompany, id]);
+    getCompanyInfos();
+  }, [getCompanyInfos, id]);
 
   const chartComponentRef = useRef<HighchartsReact.RefObject>(null);
 
@@ -177,11 +204,6 @@ function Company() {
         <div>
           <h1>{company.name}</h1>
           <Button onClick={() => getAssets()}>Usa API dos ativos</Button>
-          <Button onClick={() => getUsers()}>Usa API dos usuários</Button>
-          <Button onClick={() => getUnits()}>Usa API das unidades</Button>
-          <Button onClick={() => getWorkorders()}>
-            Usa API das ordens de serviço
-          </Button>
         </div>
       )}
       <div>
@@ -191,6 +213,45 @@ function Company() {
         dos ativos quando carregar essa pagina, e ai usar TS pra trabalhar com
         essas infos
       </div>
+      <h2>Unidades</h2>
+      <ul>
+        {!!units.length &&
+          units.map((unit) => <li key={unit.id}>{unit.name}</li>)}
+      </ul>
+      <h2>Usuários</h2>
+      <ul>
+        {!!users.length &&
+          users.map((user) => (
+            <li key={user.id}>
+              {user.name} - {user.email} - {user.unitId} -{" "}
+              {unitMap.get(user.unitId)}
+            </li>
+          ))}
+      </ul>
+      <h2>Ordens de serviço</h2>
+      <ul>
+        {!!workorders.length &&
+          workorders.map((workorder) => (
+            <li key={workorder.id}>
+              {workorder.assetId} - {workorder.description} -{" "}
+              {workorder.priority} - {workorder.status} - {workorder.title}
+              <ul>
+                {workorder.checklist.length &&
+                  workorder.checklist.map((checklistItem) => (
+                    <li key={checklistItem.task}>
+                      {checklistItem.completed} - {checklistItem.task}
+                    </li>
+                  ))}
+              </ul>
+              <ul>
+                {workorder.assignedUserIds.length &&
+                  workorder.assignedUserIds.map((assignedUserId) => (
+                    <li key={assignedUserId}>{assignedUserId}</li>
+                  ))}
+              </ul>
+            </li>
+          ))}
+      </ul>
       <HighchartsReact
         highcharts={Highcharts}
         options={options}
