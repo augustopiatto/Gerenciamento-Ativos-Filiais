@@ -12,8 +12,8 @@ function Users({ users }: IProps) {
   const genExtra = () => (
     <FilterOutlined
       onClick={(event) => {
-        // If you don't want click extra trigger collapse, you can prevent this:
         event.stopPropagation();
+        // Filtro no gráfico?
       }}
     />
   );
