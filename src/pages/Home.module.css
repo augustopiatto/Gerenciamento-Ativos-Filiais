@@ -1,0 +1,14 @@
+.container {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.companySearch {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.selectBox {
+  width: 90%;
+}

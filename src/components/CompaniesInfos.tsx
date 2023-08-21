@@ -1,9 +1,9 @@
 import { api } from "../api/axios";
 import React from "react";
-import Assets from "./Assets.tsx";
-import Units from "./Units.tsx";
-import Users from "./Users.tsx";
-import Workorders from "./Workorders.tsx";
+import Assets from "./Assets";
+import Units from "./Units";
+import Users from "./Users";
+import Workorders from "./Workorders";
 import {
   AssetsInterface,
   UnitsInterface,

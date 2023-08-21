@@ -1,7 +1,8 @@
 import React from "react";
 import { api } from "../api/axios";
 import { Select } from "antd";
-import Companies from "../components/Companies.tsx";
+import CompaniesInfos from "../components/CompaniesInfos.tsx";
+import styles from "./Home.module.css";
 
 function Home() {
   const [companies, setCompanies] = React.useState<
@@ -34,19 +35,22 @@ function Home() {
   }, []);
 
   return (
-    <>
-      <h1>Companies</h1>
-      <Select
-        showSearch
-        placeholder="Select company"
-        options={companies}
-        onChange={onChange}
-        filterOption={(input, option) =>
-          (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
-        }
-      />
-      <Companies companyId={filteredCompanyId} />
-    </>
+    <div className={styles.container}>
+      <div className={styles.companySearch}>
+        <h1>Companies</h1>
+        <Select
+          className={styles.selectBox}
+          showSearch
+          placeholder="Select company"
+          options={companies}
+          onChange={onChange}
+          filterOption={(input, option) =>
+            (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
+          }
+        />
+      </div>
+      <CompaniesInfos companyId={filteredCompanyId} />
+    </div>
   );
 }
 
