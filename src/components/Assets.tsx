@@ -11,14 +11,45 @@ interface IProps {
 
 const options: Highcharts.Options = {
   title: {
-    text: "My chart",
+    text: "Health History",
+  },
+  subtitle: {
+    // text: {asset.name}
+  },
+  yAxis: {
+    title: { text: "Health" },
+    categories: [
+      "Unplanned Stop",
+      "Planned Stop",
+      "In Alert",
+      "In Downtime",
+      "In Operation",
+    ],
+  },
+  xAxis: {
+    title: { text: "Date UTC" },
+    categories: [
+      "2022/12/01 00:00:00",
+      "2022/12-08 00:00:00",
+      "2022/12/15 00:00:00",
+      "2022/12/22 00:00:00",
+      "2022/12/29 00:00:00",
+    ],
   },
   series: [
     {
-      type: "line",
-      data: [1, 2, 3],
+      showInLegend: false,
+      type: "spline",
+      data: [4, 3, 4, 2, 0],
     },
   ],
+  tooltip: {
+    headerFormat: "<b>Health</b><br/>",
+  },
+  chart: {
+    width: 500,
+    height: 300,
+  },
 };
 
 function Assets({ assets }: IProps) {
@@ -37,47 +68,47 @@ function Assets({ assets }: IProps) {
               </Col>
               <Col span={3} offset={9}>
                 <p>
-                  {asset.status} - {asset.healthscore}/100
+                  {asset.status} - {asset.healthscore}%
                 </p>
               </Col>
             </Row>
             <p>Company: {asset.companyId}</p>
             <p>Unit: {asset.unitId}</p>
             <img src={asset.image} alt={asset.name} className={styles.image} />
+            {/* Gráfico com histórico de saúde do equipamento, e mostrando o nível de saúde atual no horário que puxou da api */}
             <HighchartsReact
-              className={styles.highchart}
               highcharts={Highcharts}
               options={options}
               ref={chartComponentRef}
             />
-            <p>
+            <div>
               Specifications:{" "}
               <ul>
                 {Object.keys(asset.specifications).map((key) => (
-                  <li>
+                  <li key={key}>
                     {key}: {asset.specifications[key] || "N/A"}
                   </li>
                 ))}
               </ul>
-            </p>
-            <p>
+            </div>
+            <div>
               Sensors:{" "}
               <ul>
                 {asset.sensors.map((sensor) => (
-                  <li>{sensor}</li>
+                  <li key={sensor}>{sensor}</li>
                 ))}
               </ul>
-            </p>
-            <p>
+            </div>
+            <div>
               Metrics:{" "}
               <ul>
                 {Object.keys(asset.metrics).map((key) => (
-                  <li>
+                  <li key={key}>
                     {key}: {asset.metrics[key]}
                   </li>
                 ))}
               </ul>
-            </p>
+            </div>
           </div>
         ))}
     </>
