@@ -1,11 +1,9 @@
-import { Button } from "antd";
 import { api } from "../api/axios";
-import React, { useRef } from "react";
-import * as Highcharts from "highcharts";
-import HighchartsReact from "highcharts-react-official";
-import Units from "./Units";
-import Users from "./Users";
-import Workorders from "./Workorders";
+import React from "react";
+import Assets from "./Assets.tsx";
+import Units from "./Units.tsx";
+import Users from "./Users.tsx";
+import Workorders from "./Workorders.tsx";
 import {
   AssetsInterface,
   UnitsInterface,
@@ -17,18 +15,6 @@ interface IProps {
   companyId: number | null;
 }
 
-const options: Highcharts.Options = {
-  title: {
-    text: "My chart",
-  },
-  series: [
-    {
-      type: "line",
-      data: [1, 2, 3],
-    },
-  ],
-};
-
 function Company({ companyId }: IProps) {
   const [assets, setAssets] = React.useState<AssetsInterface[]>([]);
   const [units, setUnits] = React.useState<UnitsInterface[]>([]);
@@ -39,17 +25,30 @@ function Company({ companyId }: IProps) {
 
   const getCompanyInfos = React.useCallback(
     async function (): Promise<void> {
+      let assetsResponse;
       let usersResponse;
       let unitsResponse;
       let workordersResponse;
       try {
-        [usersResponse, unitsResponse, workordersResponse] = await Promise.all([
-          api.get("users").catch(() => console.log("usersError")),
-          api.get("units").catch(() => console.log("unitsError")),
-          api.get("workorders").catch(() => console.log("workordersError")),
-        ]);
+        [assetsResponse, usersResponse, unitsResponse, workordersResponse] =
+          await Promise.all([
+            api.get("assets").catch(() => console.log("assetsError")),
+            api.get("users").catch(() => console.log("usersError")),
+            api.get("units").catch(() => console.log("unitsError")),
+            api.get("workorders").catch(() => console.log("workordersError")),
+          ]);
       } catch (error) {
         console.log(error);
+      }
+      if (assetsResponse) {
+        let companyAssets: AssetsInterface[] = assetsResponse.data;
+        if (companyId) {
+          companyAssets = companyAssets.filter(
+            (user: AssetsInterface) => user.companyId === companyId
+          );
+        }
+        console.log(companyAssets);
+        setAssets(companyAssets);
       }
       if (usersResponse) {
         let companyUsers: UsersInterface[] = usersResponse.data;
@@ -77,33 +76,16 @@ function Company({ companyId }: IProps) {
     [companyId]
   );
 
-  async function getAssets() {
-    try {
-      const response = await api.get("assets");
-      setAssets(response.data);
-      console.log("assets", assets);
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
   React.useEffect(() => {
     getCompanyInfos();
   }, [getCompanyInfos]);
 
-  const chartComponentRef = useRef<HighchartsReact.RefObject>(null);
-
   return (
     <>
-      <Button onClick={() => getAssets()}>Usa API dos ativos</Button>
+      <Assets assets={assets} />
       <Units units={units} />
       <Users users={users} />
       <Workorders workorders={workorders} />
-      <HighchartsReact
-        highcharts={Highcharts}
-        options={options}
-        ref={chartComponentRef}
-      />
     </>
   );
 }
