@@ -47,7 +47,6 @@ function Company({ companyId }: IProps) {
             (user: AssetsInterface) => user.companyId === companyId
           );
         }
-        console.log(companyAssets);
         setAssets(companyAssets);
       }
       if (usersResponse) {

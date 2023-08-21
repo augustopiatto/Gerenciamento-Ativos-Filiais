@@ -3,7 +3,7 @@ import { useRef } from "react";
 import * as Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import styles from "./Assets.module.css";
-import { Col, Row } from "antd";
+import { Badge, Tooltip } from "antd";
 
 interface IProps {
   assets: AssetsInterface[];
@@ -55,63 +55,71 @@ const options: Highcharts.Options = {
 function Assets({ assets }: IProps) {
   const chartComponentRef = useRef<HighchartsReact.RefObject>(null);
   return (
-    <>
+    <div className={styles.container}>
       <h2>Assets</h2>
       {!!assets.length &&
         assets.map((asset) => (
-          <div key={asset.id}>
-            <Row>
-              <Col span={12}>
+          <div key={asset.id} className={styles.singleAssetContainer}>
+            <div className={styles.assetHeader}>
+              <div>
                 <h3>
-                  {asset.name} - {asset.model}
+                  {asset.name} | model: {asset.model}
                 </h3>
-              </Col>
-              <Col span={3} offset={9}>
-                <p>
-                  {asset.status} - {asset.healthscore}%
-                </p>
-              </Col>
-            </Row>
-            <p>Company: {asset.companyId}</p>
-            <p>Unit: {asset.unitId}</p>
-            <img src={asset.image} alt={asset.name} className={styles.image} />
-            {/* Gráfico com histórico de saúde do equipamento, e mostrando o nível de saúde atual no horário que puxou da api */}
+              </div>
+              <div>
+                <Tooltip placement="top" title="Status">
+                  <Badge count={asset.status} color="#faad14" />
+                </Tooltip>
+                <Tooltip placement="top" title="Healthscore">
+                  <Badge count={`${asset.healthscore}%`} />
+                </Tooltip>
+              </div>
+            </div>
+            <p>
+              <b>Company:</b> {asset.companyId}
+            </p>
+            <p>
+              <b>Unit:</b> {asset.unitId}
+            </p>
+            <div className={styles.imageContainer}>
+              <img
+                src={asset.image}
+                alt={asset.name}
+                className={styles.image}
+              />
+              <div className={styles.assetDetails}>
+                <p>Specifications:</p>
+                <ul>
+                  {Object.keys(asset.specifications).map((key) => (
+                    <li key={key}>
+                      {key}: {asset.specifications[key] || "N/A"}
+                    </li>
+                  ))}
+                </ul>
+                <p>Sensors:</p>
+                <ul>
+                  {asset.sensors.map((sensor) => (
+                    <li key={sensor}>{sensor}</li>
+                  ))}
+                </ul>
+                <p>Metrics:</p>
+                <ul>
+                  {Object.keys(asset.metrics).map((key) => (
+                    <li key={key}>
+                      {key}: {asset.metrics[key]}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
             <HighchartsReact
               highcharts={Highcharts}
               options={options}
               ref={chartComponentRef}
             />
-            <div>
-              Specifications:{" "}
-              <ul>
-                {Object.keys(asset.specifications).map((key) => (
-                  <li key={key}>
-                    {key}: {asset.specifications[key] || "N/A"}
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              Sensors:{" "}
-              <ul>
-                {asset.sensors.map((sensor) => (
-                  <li key={sensor}>{sensor}</li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              Metrics:{" "}
-              <ul>
-                {Object.keys(asset.metrics).map((key) => (
-                  <li key={key}>
-                    {key}: {asset.metrics[key]}
-                  </li>
-                ))}
-              </ul>
-            </div>
           </div>
         ))}
-    </>
+    </div>
   );
 }
 

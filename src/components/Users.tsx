@@ -37,10 +37,10 @@ function Users({ users }: IProps) {
   });
 
   return (
-    <>
+    <div>
       <h2>Usuários</h2>
       {!!items.length && <Collapse items={items} />}
-    </>
+    </div>
   );
 }
 

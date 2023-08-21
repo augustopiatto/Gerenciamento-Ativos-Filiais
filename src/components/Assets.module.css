@@ -1,7 +1,64 @@
-.image {
-  width: 200px;
+.container {
+  background-color: rgba(200, 200, 200, 0.5);
+  padding: 0 16px;
+  border-radius: 8px;
 }
 
-.highchart {
-  width: 50px;
+.singleAssetContainer {
+  background-color: rgba(200, 200, 200, 0.8);
+  display: flex;
+  flex-direction: column;
+  padding: 0 16px 16px 16px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+.assetHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.status {
+  border-radius: 50%;
+  background-color: yellow;
+  line-height: 16px;
+}
+
+.imageContainer {
+  margin: 16px 0;
+  display: flex;
+}
+
+.image {
+  width: 420px;
+}
+
+@media (max-width: 840px) {
+  .image {
+    height: auto;
+    width: auto;
+    max-width: calc(100vw - 64px);
+  }
+  .imageContainer {
+    display: block;
+  }
+}
+
+.assetDetails {
+  background-color: rgb(220, 220, 220);
+  padding: 16px;
+  margin: auto;
+  border-radius: 8px;
+}
+
+.assetDetails ul {
+  padding: 0;
+  list-style-type: none;
+  margin: 0 16px 16px 0;
+}
+
+.assetDetails p {
+  font-weight: bold;
+  font-size: 18px;
 }

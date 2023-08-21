@@ -51,10 +51,10 @@ function Workorders({ workorders }: IProps) {
   );
 
   return (
-    <>
+    <div>
       <h2>Ordens de serviço</h2>
       {!!workorders.length && <Collapse items={workordersItems} size="small" />}
-    </>
+    </div>
   );
 }
 
