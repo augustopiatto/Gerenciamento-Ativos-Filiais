@@ -24,6 +24,8 @@ interface Metrics {
 
 interface Specifications {
   maxTemp: number;
+  power?: number;
+  rpm?: number | null;
 }
 
 export interface AssetsInterface {
