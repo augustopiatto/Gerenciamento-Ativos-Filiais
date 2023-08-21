@@ -35,10 +35,6 @@ function Home() {
 
   return (
     <>
-      <p>
-        Bem vindo ao nosso site, essas são as empresas que temos conosco. Qual
-        delas você gostaria de mais informações?
-      </p>
       <h1>Companies</h1>
       <Select
         showSearch
