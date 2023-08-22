@@ -49,7 +49,7 @@ function Assets({ assets, companies, units }: IProps) {
       {
         showInLegend: false,
         type: "spline",
-        data: [4, 1, 4, 2, 3],
+        data: [], // vazio pq já vai preencher,
       },
     ],
     tooltip: {
