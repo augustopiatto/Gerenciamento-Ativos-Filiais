@@ -8,10 +8,14 @@ interface IProps {
 function Users({ units }: IProps) {
   return (
     <div className="container">
-      <h2>Unidades</h2>
-      <ul className={styles.unitsName}>
+      <h2>Units</h2>
+      <ul className={styles.unitsContainer}>
         {!!units.length &&
-          units.map((unit) => <li key={unit.id}>{unit.name}</li>)}
+          units.map((unit) => (
+            <li className={styles.unitsName} key={unit.id}>
+              {unit.name}
+            </li>
+          ))}
       </ul>
     </div>
   );

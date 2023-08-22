@@ -1,15 +1,16 @@
-.unitsName {
+.unitsContainer {
   list-style-type: none;
   font-size: 18px;
-  background-color: rgba(200, 200, 200, 0.8);
-  border-radius: 8px;
-  padding: 16px;
+  padding: 0;
 }
 
-.unitsName li {
+.unitsName {
+  background-color: rgba(200, 200, 200, 0.8);
+  padding: 16px;
+  border-radius: 8px;
   margin-bottom: 16px;
 }
 
-.unitsName li:last-child {
+.unitsContainer li:last-child {
   margin-bottom: 0;
 }
