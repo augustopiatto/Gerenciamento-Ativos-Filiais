@@ -1,14 +1,20 @@
-import { WorkordersInterface } from "../commons/types.tsx";
+import {
+  AssetsInterface,
+  UsersInterface,
+  WorkordersInterface,
+} from "../commons/types.tsx";
 import styles from "./Workorders.module.css";
-import { Col } from "antd";
 import type { CollapseProps } from "antd";
 import { Collapse, Badge } from "antd";
+import { CheckCircleTwoTone, CloseCircleTwoTone } from "@ant-design/icons";
 
 interface IProps {
+  assets: AssetsInterface[];
+  users: UsersInterface[];
   workorders: WorkordersInterface[];
 }
 
-function Workorders({ workorders }: IProps) {
+function Workorders({ assets, users, workorders }: IProps) {
   function setPriorityColor(priority: string): string {
     const priorities: {
       [key: string]: string;
@@ -16,11 +22,24 @@ function Workorders({ workorders }: IProps) {
       medium: string;
       low: string;
     } = {
-      high: "ff4d4f",
-      medium: "faad14",
-      low: "f5222d",
+      high: "#ff4d4f",
+      medium: "#faad14",
+      low: "#f5222d",
     };
     return priorities[priority];
+  }
+
+  function setStatusColor(value: string): string {
+    const status: {
+      [key: string]: string;
+      completed: string;
+      "in progress": string;
+    } = {
+      completed: "green",
+      "in progress": "#faad14",
+    };
+    console.log(status[value]);
+    return status[value];
   }
 
   const workordersItems: CollapseProps["items"] = workorders.map(
@@ -37,29 +56,45 @@ function Workorders({ workorders }: IProps) {
               />
             </div>
             <div>
-              <h3>{workorder.status}</h3>
+              <Badge
+                count={workorder.status}
+                color={setStatusColor(workorder.status)}
+              />
             </div>
           </div>
         ),
         children: (
-          <Col>
-            <p>Asset: {workorder.assetId}</p>
-            <p>Description: {workorder.description}</p>
+          <div className={styles.detailsContainer}>
+            <p>
+              <b>Asset: </b>
+              {assets.filter((asset) => asset.id === workorder.assetId)[0].name}
+            </p>
+            <p>
+              <b>Description: </b>
+              {workorder.description}
+            </p>
             <ul>
-              Assigned Users:{" "}
+              <b>Assigned Users: </b>
               {workorder.assignedUserIds.map((assignedUserId) => (
-                <li key={assignedUserId}>{assignedUserId}</li>
-              ))}
-            </ul>
-            <ul>
-              Checklist:{" "}
-              {workorder.checklist.map((checklist) => (
-                <li key={checklist.task}>
-                  Task:{checklist.task} - {checklist.completed}
+                <li key={assignedUserId}>
+                  {users.filter((user) => user.id === assignedUserId)[0].name}
                 </li>
               ))}
             </ul>
-          </Col>
+            <ul>
+              <b>Checklist: </b>
+              {workorder.checklist.map((checklist) => (
+                <li key={checklist.task}>
+                  Task: {checklist.task}{" "}
+                  {checklist.completed ? (
+                    <CheckCircleTwoTone twoToneColor="#52c41a" />
+                  ) : (
+                    <CloseCircleTwoTone twoToneColor="#f5222d" />
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
         ),
       };
     }
