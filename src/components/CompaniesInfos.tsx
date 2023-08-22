@@ -68,7 +68,6 @@ function Company({ companyId, companies }: IProps) {
           );
         }
         setUnits(companyUnits);
-        // });
       }
       if (workordersResponse) setWorkorders(workordersResponse.data);
     },
@@ -82,7 +81,7 @@ function Company({ companyId, companies }: IProps) {
   return (
     <>
       <Units units={units} />
-      <Users users={users} />
+      <Users users={users} units={units} />
       <Workorders workorders={workorders} />
       <Assets assets={assets} companies={companies} />
     </>

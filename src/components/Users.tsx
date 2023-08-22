@@ -1,11 +1,12 @@
-import { UsersInterface } from "../commons/types.tsx";
+import { UnitsInterface, UsersInterface } from "../commons/types.tsx";
 import styles from "./Users.module.css";
 
 interface IProps {
   users: UsersInterface[];
+  units: UnitsInterface[];
 }
 
-function Users({ users }: IProps) {
+function Users({ users, units }: IProps) {
   return (
     <div className="container">
       <h2>Users</h2>
@@ -16,7 +17,8 @@ function Users({ users }: IProps) {
               <b>E-mail:</b> {user.email}
             </p>
             <p>
-              <b>Unit:</b> {user.unitId}
+              <b>Unit:</b>{" "}
+              {units.filter((unit) => unit.id === user.unitId)[0].name}
             </p>
           </div>
         ))}
