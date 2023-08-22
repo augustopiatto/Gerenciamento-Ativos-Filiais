@@ -1,12 +1,14 @@
-import { AssetsInterface } from "../commons/types.tsx";
+import { AssetsInterface, CompanyInterface } from "../commons/types.tsx";
 import { useRef } from "react";
 import * as Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import styles from "./Assets.module.css";
 import { Badge, Tooltip } from "antd";
+import { Metrics, Specifications } from "../commons/types.tsx";
 
 interface IProps {
   assets: AssetsInterface[];
+  companies: CompanyInterface[];
 }
 
 const options: Highcharts.Options = {
@@ -17,7 +19,6 @@ const options: Highcharts.Options = {
     // text: {asset.name}
   },
   yAxis: {
-    title: { text: "Health" },
     categories: [
       "Unplanned Stop",
       "Planned Stop",
@@ -27,13 +28,13 @@ const options: Highcharts.Options = {
     ],
   },
   xAxis: {
-    title: { text: "Date UTC" },
+    title: { text: "Datetime UTC at 00h00" },
     categories: [
-      "2022/12/01 00:00:00",
-      "2022/12-08 00:00:00",
-      "2022/12/15 00:00:00",
-      "2022/12/22 00:00:00",
-      "2022/12/29 00:00:00",
+      "2022/12/01",
+      "2022/12-08",
+      "2022/12/15",
+      "2022/12/22",
+      "2022/12/29",
     ],
   },
   series: [
@@ -47,12 +48,11 @@ const options: Highcharts.Options = {
     headerFormat: "<b>Health</b><br/>",
   },
   chart: {
-    width: 500,
     height: 300,
   },
 };
 
-function Assets({ assets }: IProps) {
+function Assets({ assets, companies }: IProps) {
   const chartComponentRef = useRef<HighchartsReact.RefObject>(null);
   return (
     <div className={styles.container}>
@@ -68,7 +68,11 @@ function Assets({ assets }: IProps) {
               </div>
               <div>
                 <Tooltip placement="top" title="Status">
-                  <Badge count={asset.status} color="#faad14" />
+                  <Badge
+                    count={asset.status}
+                    color="#faad14"
+                    className={styles.badgeSpace}
+                  />
                 </Tooltip>
                 <Tooltip placement="top" title="Healthscore">
                   <Badge count={`${asset.healthscore}%`} />
@@ -76,7 +80,11 @@ function Assets({ assets }: IProps) {
               </div>
             </div>
             <p>
-              <b>Company:</b> {asset.companyId}
+              <b>Company:</b>{" "}
+              {
+                companies.filter((company) => company.id === asset.companyId)[0]
+                  .name
+              }
             </p>
             <p>
               <b>Unit:</b> {asset.unitId}
@@ -92,7 +100,9 @@ function Assets({ assets }: IProps) {
                 <ul>
                   {Object.keys(asset.specifications).map((key) => (
                     <li key={key}>
-                      {key}: {asset.specifications[key] || "N/A"}
+                      {key}:{" "}
+                      {asset.specifications[key as keyof Specifications] ||
+                        "N/A"}
                     </li>
                   ))}
                 </ul>
@@ -106,7 +116,7 @@ function Assets({ assets }: IProps) {
                 <ul>
                   {Object.keys(asset.metrics).map((key) => (
                     <li key={key}>
-                      {key}: {asset.metrics[key]}
+                      {key}: {asset.metrics[key as keyof Metrics]}
                     </li>
                   ))}
                 </ul>

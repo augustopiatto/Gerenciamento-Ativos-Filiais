@@ -16,13 +16,13 @@ interface HealthHistory {
   timestamp: string;
 }
 
-interface Metrics {
+export interface Metrics {
   lastUptimeAt: string;
   totalCollectsUptime: number;
   totalUptime: number;
 }
 
-interface Specifications {
+export interface Specifications {
   maxTemp: number;
   power?: number;
   rpm?: number | null;

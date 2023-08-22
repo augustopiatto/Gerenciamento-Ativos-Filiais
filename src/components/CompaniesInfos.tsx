@@ -6,6 +6,7 @@ import Users from "./Users";
 import Workorders from "./Workorders";
 import {
   AssetsInterface,
+  CompanyInterface,
   UnitsInterface,
   UsersInterface,
   WorkordersInterface,
@@ -13,15 +14,14 @@ import {
 
 interface IProps {
   companyId: number | null;
+  companies: CompanyInterface[];
 }
 
-function Company({ companyId }: IProps) {
+function Company({ companyId, companies }: IProps) {
   const [assets, setAssets] = React.useState<AssetsInterface[]>([]);
   const [units, setUnits] = React.useState<UnitsInterface[]>([]);
   const [users, setUsers] = React.useState<UsersInterface[]>([]);
   const [workorders, setWorkorders] = React.useState<WorkordersInterface[]>([]);
-
-  // const unitMap = new Map<number, string>();
 
   const getCompanyInfos = React.useCallback(
     async function (): Promise<void> {
@@ -32,10 +32,12 @@ function Company({ companyId }: IProps) {
       try {
         [assetsResponse, usersResponse, unitsResponse, workordersResponse] =
           await Promise.all([
-            api.get("assets").catch(() => console.log("assetsError")),
-            api.get("users").catch(() => console.log("usersError")),
-            api.get("units").catch(() => console.log("unitsError")),
-            api.get("workorders").catch(() => console.log("workordersError")),
+            api.get("assets").catch(() => console.log("assetsApiFetchError")),
+            api.get("users").catch(() => console.log("usersApiFetchError")),
+            api.get("units").catch(() => console.log("unitsApiFetchError")),
+            api
+              .get("workorders")
+              .catch(() => console.log("workordersApiFetchError")),
           ]);
       } catch (error) {
         console.log(error);
@@ -66,8 +68,6 @@ function Company({ companyId }: IProps) {
           );
         }
         setUnits(companyUnits);
-        // await companyUnits.forEach((unit) => {
-        //   unitMap.set(unit.id, unit.name);
         // });
       }
       if (workordersResponse) setWorkorders(workordersResponse.data);
@@ -81,7 +81,7 @@ function Company({ companyId }: IProps) {
 
   return (
     <>
-      <Assets assets={assets} />
+      <Assets assets={assets} companies={companies} />
       <Units units={units} />
       <Users users={users} />
       <Workorders workorders={workorders} />
