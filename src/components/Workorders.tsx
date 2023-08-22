@@ -1,30 +1,45 @@
 import { WorkordersInterface } from "../commons/types.tsx";
-// import styles from "./Units.module.css";
-import { Col, Row } from "antd";
+import styles from "./Workorders.module.css";
+import { Col } from "antd";
 import type { CollapseProps } from "antd";
-import { Collapse } from "antd";
+import { Collapse, Badge } from "antd";
 
 interface IProps {
   workorders: WorkordersInterface[];
 }
 
 function Workorders({ workorders }: IProps) {
+  function setPriorityColor(priority: string): string {
+    const priorities: {
+      [key: string]: string;
+      high: string;
+      medium: string;
+      low: string;
+    } = {
+      high: "ff4d4f",
+      medium: "faad14",
+      low: "f5222d",
+    };
+    return priorities[priority];
+  }
+
   const workordersItems: CollapseProps["items"] = workorders.map(
     (workorder) => {
       return {
         key: workorder.id,
         label: (
-          <Row>
-            <Col span={12}>
-              <Row>
-                <h3>{workorder.title}</h3>
-                <p>{workorder.priority}</p>
-              </Row>
-            </Col>
-            <Col span={3} offset={9}>
+          <div className={styles.labelContainer}>
+            <div className={styles.label}>
+              <h3>{workorder.title}</h3>
+              <Badge
+                count={workorder.priority}
+                color={setPriorityColor(workorder.priority)}
+              />
+            </div>
+            <div>
               <h3>{workorder.status}</h3>
-            </Col>
-          </Row>
+            </div>
+          </div>
         ),
         children: (
           <Col>
@@ -51,8 +66,8 @@ function Workorders({ workorders }: IProps) {
   );
 
   return (
-    <div>
-      <h2>Ordens de serviço</h2>
+    <div className="container">
+      <h2>Workorders</h2>
       {!!workorders.length && <Collapse items={workordersItems} size="small" />}
     </div>
   );
