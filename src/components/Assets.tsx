@@ -21,46 +21,74 @@ interface IProps {
   units: UnitsInterface[];
 }
 
-const options: Highcharts.Options = {
-  title: {
-    text: "Health History",
-  },
-  yAxis: {
-    categories: [
-      "Unplanned Stop",
-      "Planned Stop",
-      "In Alert",
-      "In Downtime",
-      "In Operation",
-    ],
-  },
-  xAxis: {
-    title: { text: "Datetime UTC at 00h00" },
-    categories: [
-      "2022/12/01",
-      "2022/12-08",
-      "2022/12/15",
-      "2022/12/22",
-      "2022/12/29",
-    ],
-  },
-  series: [
-    {
-      showInLegend: false,
-      type: "spline",
-      data: [4, 3, 4, 2, 0],
-    },
-  ],
-  tooltip: {
-    headerFormat: "<b>Health</b><br/>",
-  },
-  chart: {
-    height: 300,
-  },
-};
-
 function Assets({ assets, companies, units }: IProps) {
+  const options: Highcharts.Options = {
+    title: {
+      text: "Health History",
+    },
+    yAxis: {
+      categories: [
+        "Unplanned Stop",
+        "Planned Stop",
+        "In Alert",
+        "In Downtime",
+        "In Operation",
+      ],
+    },
+    xAxis: {
+      title: { text: "Datetime UTC at 00h00" },
+      categories: [
+        "2022/12/01",
+        "2022/12-08",
+        "2022/12/15",
+        "2022/12/22",
+        "2022/12/29",
+      ],
+    },
+    series: [
+      {
+        showInLegend: false,
+        type: "spline",
+        data: [4, 1, 4, 2, 3],
+      },
+    ],
+    tooltip: {
+      headerFormat: "<b>Health</b><br/>",
+    },
+    chart: {
+      height: 300,
+    },
+  };
+
   const chartComponentRef = useRef<HighchartsReact.RefObject>(null);
+
+  function changeParams(options: Highcharts.Options, asset: AssetsInterface) {
+    const status: {
+      [key: string]: number;
+      unplannedStop: number;
+      plannedStop: number;
+      inAlert: number;
+      inDowntime: number;
+      inOperation: number;
+    } = {
+      unplannedStop: 0,
+      plannedStop: 1,
+      inAlert: 2,
+      inDowntime: 3,
+      inOperation: 4,
+    };
+    if (options.series && options.series[0]) {
+      const data = asset.healthHistory.map((health) => status[health.status]);
+      const series = [{ showInLegend: false, type: "spline", data: data }];
+      const newOptions = {
+        ...options,
+        series,
+      };
+      return newOptions;
+    }
+    return options;
+  }
+
   return (
     <div className="container">
       <h2>Assets</h2>
@@ -144,7 +172,7 @@ function Assets({ assets, companies, units }: IProps) {
             </div>
             <HighchartsReact
               highcharts={Highcharts}
-              options={options}
+              options={changeParams(options, asset)}
               ref={chartComponentRef}
             />
           </div>
