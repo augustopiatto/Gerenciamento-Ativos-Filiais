@@ -1,5 +1,4 @@
 .singleAssetContainer {
-  background-color: rgba(200, 200, 200, 0.8);
   display: flex;
   flex-direction: column;
   padding: 0 16px 16px 16px;
@@ -16,12 +15,6 @@
 
 .badgeSpace {
   margin-right: 8px;
-}
-
-.status {
-  border-radius: 50%;
-  background-color: yellow;
-  line-height: 16px;
 }
 
 .imageContainer {
@@ -45,7 +38,7 @@
 }
 
 .assetDetails {
-  background-color: rgb(220, 220, 220);
+  background-color: var(--light-base-color);
   padding: 16px;
   margin: auto;
   border-radius: 8px;

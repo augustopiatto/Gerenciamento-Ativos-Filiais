@@ -41,7 +41,7 @@ function Home() {
   }, []);
 
   return (
-    <div className={styles.container}>
+    <div className={styles.homeContainer}>
       <div className={styles.companySearch}>
         <h1>Companies</h1>
         <Select

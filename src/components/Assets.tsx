@@ -66,7 +66,10 @@ function Assets({ assets, companies, units }: IProps) {
       <h2>Assets</h2>
       {!!assets.length &&
         assets.map((asset) => (
-          <div key={asset.id} className={styles.singleAssetContainer}>
+          <div
+            key={asset.id}
+            className={`${styles.singleAssetContainer} info-background-color`}
+          >
             <div className={styles.assetHeader}>
               <div>
                 <h3>
@@ -77,6 +80,7 @@ function Assets({ assets, companies, units }: IProps) {
                 <Tooltip placement="top" title="Status">
                   <Badge
                     count={convertFromCamelCase(asset.status)}
+                    // deixar aqui com a cor warning
                     color="#faad14"
                     className={styles.badgeSpace}
                   />

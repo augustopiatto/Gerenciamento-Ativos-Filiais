@@ -3,7 +3,7 @@ import styles from "./Header.module.css";
 
 function Header() {
   return (
-    <div className={styles.container}>
+    <div className={`${styles.headerContainer} info-background-color`}>
       <Link to="/" className={styles.homeRouter}>
         Home
       </Link>

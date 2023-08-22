@@ -12,7 +12,10 @@ function Users({ users, units }: IProps) {
       <h2>Users</h2>
       {!!users.length &&
         users.map((user) => (
-          <div className={styles.userContainer} key={user.id}>
+          <div
+            className={`${styles.userContainer} info-background-color`}
+            key={user.id}
+          >
             <p className={styles.email}>
               <b>E-mail:</b> {user.email}
             </p>

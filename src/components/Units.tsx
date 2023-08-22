@@ -12,7 +12,10 @@ function Users({ units }: IProps) {
       <ul className={styles.unitsContainer}>
         {!!units.length &&
           units.map((unit) => (
-            <li className={styles.unitsName} key={unit.id}>
+            <li
+              className={`${styles.unitsName} info-background-color`}
+              key={unit.id}
+            >
               {unit.name}
             </li>
           ))}

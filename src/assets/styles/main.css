@@ -6,8 +6,36 @@
 body {
   margin: 0;
   overflow-y: auto;
+  --base-color: rgba(110, 80, 40, 0.85);
+  --light-base-color: rgba(210, 180, 140, 0.7);
+  --success: rgba(0, 255, 0, 1);
+  --warning: rgba(0, 255, 255, 1);
+  --error: rgba(255, 0, 0, 1);
 }
 
 p {
   margin: 0;
+}
+
+.ant-collapse {
+  border: none;
+}
+
+.ant-collapse > .ant-collapse-item {
+  border: none;
+}
+
+.ant-collapse > .ant-collapse-item > .ant-collapse-header {
+  display: flex;
+  align-items: center;
+  background-color: var(--base-color);
+  border-radius: 8px;
+}
+
+.ant-collapse > .ant-collapse-item {
+  margin-bottom: 16px;
+}
+
+.info-background-color {
+  background-color: var(--base-color);
 }

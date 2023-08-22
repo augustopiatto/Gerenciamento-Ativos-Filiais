@@ -11,6 +11,8 @@ import {
   UsersInterface,
   WorkordersInterface,
 } from "../commons/types";
+import { Spin } from "antd";
+import styles from "./CompaniesInfo.module.css";
 
 interface IProps {
   companyId: number | null;
@@ -22,14 +24,17 @@ function Company({ companyId, companies }: IProps) {
   const [units, setUnits] = React.useState<UnitsInterface[]>([]);
   const [users, setUsers] = React.useState<UsersInterface[]>([]);
   const [workorders, setWorkorders] = React.useState<WorkordersInterface[]>([]);
+  const [loading, setLoading] = React.useState<boolean>(false);
 
   const getCompanyInfos = React.useCallback(
     async function (): Promise<void> {
+      setLoading(false);
       let assetsResponse;
       let usersResponse;
       let unitsResponse;
       let workordersResponse;
       try {
+        setLoading(true);
         [assetsResponse, usersResponse, unitsResponse, workordersResponse] =
           await Promise.all([
             api.get("assets").catch(() => console.log("assetsApiFetchError")),
@@ -41,6 +46,8 @@ function Company({ companyId, companies }: IProps) {
           ]);
       } catch (error) {
         console.log(error);
+      } finally {
+        setLoading(false);
       }
       if (assetsResponse) {
         let companyAssets: AssetsInterface[] = assetsResponse.data;
@@ -80,10 +87,19 @@ function Company({ companyId, companies }: IProps) {
 
   return (
     <>
-      <Units units={units} />
-      <Users users={users} units={units} />
-      <Workorders assets={assets} users={users} workorders={workorders} />
-      <Assets assets={assets} companies={companies} units={units} />
+      {loading && (
+        <div className={styles.loadingContainer}>
+          <Spin size="large" />
+        </div>
+      )}
+      {!loading && (
+        <div>
+          <Units units={units} />
+          <Users users={users} units={units} />
+          <Workorders assets={assets} users={users} workorders={workorders} />
+          <Assets assets={assets} companies={companies} units={units} />
+        </div>
+      )}
     </>
   );
 }
