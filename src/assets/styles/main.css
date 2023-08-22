@@ -6,6 +6,7 @@
 body {
   margin: 0;
   overflow-y: auto;
+  --darker-base-color: rgba(110, 80, 40, 1);
   --base-color: rgba(110, 80, 40, 0.85);
   --light-base-color: rgba(210, 180, 140, 0.7);
   --lighter-base-color: rgba(210, 180, 140, 0.3);
@@ -16,6 +17,13 @@ body {
 
 p {
   margin: 0;
+}
+
+li,
+p,
+h3,
+h4 {
+  color: black;
 }
 
 .ant-collapse {

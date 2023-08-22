@@ -9,8 +9,6 @@ function App() {
     <BrowserRouter>
       <Header />
       <main className={styles.background}>
-        <div className={styles.rectangle1} />
-        <div className={styles.rectangle2} />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="*" element={<NotFound />} />

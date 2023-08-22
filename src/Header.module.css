@@ -3,8 +3,10 @@
   height: 64px;
   line-height: 64px;
   font-size: 24px;
+  font-weight: bold;
   text-align: center;
   box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.3);
+  background-color: var(--darker-base-color);
   z-index: 100;
   position: fixed;
   top: 0;
