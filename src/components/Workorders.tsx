@@ -7,6 +7,10 @@ import styles from "./Workorders.module.css";
 import type { CollapseProps } from "antd";
 import { Collapse, Badge } from "antd";
 import { CheckCircleTwoTone, CloseCircleTwoTone } from "@ant-design/icons";
+import {
+  setWorkorderPriorityColor,
+  setWorkorderStatusColor,
+} from "../helpers/helpers.tsx";
 
 interface IProps {
   assets: AssetsInterface[];
@@ -15,32 +19,6 @@ interface IProps {
 }
 
 function Workorders({ assets, users, workorders }: IProps) {
-  function setPriorityColor(priority: string): string {
-    const priorities: {
-      [key: string]: string;
-      high: string;
-      medium: string;
-      low: string;
-    } = {
-      high: "#ff4d4f",
-      medium: "#faad14",
-      low: "#f5222d",
-    };
-    return priorities[priority];
-  }
-
-  function setStatusColor(value: string): string {
-    const status: {
-      [key: string]: string;
-      completed: string;
-      "in progress": string;
-    } = {
-      completed: "green",
-      "in progress": "#faad14",
-    };
-    return status[value];
-  }
-
   const workordersItems: CollapseProps["items"] = workorders.map(
     (workorder) => {
       return {
@@ -51,13 +29,13 @@ function Workorders({ assets, users, workorders }: IProps) {
               <h3>{workorder.title}</h3>
               <Badge
                 count={workorder.priority}
-                color={setPriorityColor(workorder.priority)}
+                color={setWorkorderPriorityColor(workorder.priority)}
               />
             </div>
             <div>
               <Badge
                 count={workorder.status}
-                color={setStatusColor(workorder.status)}
+                color={setWorkorderStatusColor(workorder.status)}
               />
             </div>
           </div>

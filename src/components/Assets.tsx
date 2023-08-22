@@ -9,6 +9,11 @@ import HighchartsReact from "highcharts-react-official";
 import styles from "./Assets.module.css";
 import { Badge, Tooltip } from "antd";
 import { Metrics, Specifications } from "../commons/types.tsx";
+import {
+  convertFromCamelCase,
+  assetSpecificationsUnit,
+  assetMetricUnit,
+} from "../helpers/helpers.tsx";
 
 interface IProps {
   assets: AssetsInterface[];
@@ -71,7 +76,7 @@ function Assets({ assets, companies, units }: IProps) {
               <div>
                 <Tooltip placement="top" title="Status">
                   <Badge
-                    count={asset.status}
+                    count={convertFromCamelCase(asset.status)}
                     color="#faad14"
                     className={styles.badgeSpace}
                   />
@@ -99,14 +104,15 @@ function Assets({ assets, companies, units }: IProps) {
                 className={styles.image}
               />
               <div className={styles.assetDetails}>
-                {/* converter de camel case para normal e abstrair em um helper essa funcao e os das cores dos badges */}
                 <p>Specifications:</p>
                 <ul>
                   {Object.keys(asset.specifications).map((key) => (
                     <li key={key}>
-                      {key}:{" "}
-                      {asset.specifications[key as keyof Specifications] ||
-                        "N/A"}
+                      {convertFromCamelCase(key)}:{" "}
+                      {assetSpecificationsUnit(
+                        key,
+                        asset.specifications[key as keyof Specifications]
+                      ) || "N/A"}
                     </li>
                   ))}
                 </ul>
@@ -120,7 +126,11 @@ function Assets({ assets, companies, units }: IProps) {
                 <ul>
                   {Object.keys(asset.metrics).map((key) => (
                     <li key={key}>
-                      {key}: {asset.metrics[key as keyof Metrics]}
+                      {convertFromCamelCase(key)}:{" "}
+                      {assetMetricUnit(
+                        key,
+                        asset.metrics[key as keyof Metrics]
+                      )}
                     </li>
                   ))}
                 </ul>
