@@ -80,13 +80,15 @@ function Assets({ assets, companies, units }: IProps) {
                 <Tooltip placement="top" title="Status">
                   <Badge
                     count={convertFromCamelCase(asset.status)}
-                    // deixar aqui com a cor warning
-                    color="#faad14"
+                    style={{ backgroundColor: "var(--warning)" }}
                     className={styles.badgeSpace}
                   />
                 </Tooltip>
                 <Tooltip placement="top" title="Healthscore">
-                  <Badge count={`${asset.healthscore}%`} />
+                  <Badge
+                    count={`${asset.healthscore}%`}
+                    style={{ backgroundColor: "var(--error)" }}
+                  />
                 </Tooltip>
               </div>
             </div>

@@ -8,9 +8,9 @@ body {
   overflow-y: auto;
   --base-color: rgba(110, 80, 40, 0.85);
   --light-base-color: rgba(210, 180, 140, 0.7);
-  --success: rgba(0, 255, 0, 1);
-  --warning: rgba(0, 255, 255, 1);
-  --error: rgba(255, 0, 0, 1);
+  --success: rgba(0, 255, 0, 0.3);
+  --warning: rgba(250, 173, 20, 0.7);
+  --error: rgba(255, 0, 0, 0.5);
 }
 
 p {

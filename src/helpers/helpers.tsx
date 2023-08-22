@@ -3,7 +3,10 @@ export function convertFromCamelCase(camelCase: string): string {
   return result[0].toUpperCase() + result.substring(1).toLowerCase();
 }
 
-export function assetSpecificationsUnit(key: string, value?: number): string {
+export function assetSpecificationsUnit(
+  key?: string,
+  value?: number | null
+): string {
   const keys: {
     [key: string]: string;
     maxTemp: string;
@@ -14,7 +17,7 @@ export function assetSpecificationsUnit(key: string, value?: number): string {
     power: "kWh",
     rpm: "RPM",
   };
-  return `${value} ${keys[key]}`;
+  return key && value ? `${value} ${keys[key]}` : "";
 }
 
 export function assetMetricUnit(key: string, value: string | number): string {
@@ -59,9 +62,9 @@ export function setWorkorderPriorityColor(priority: string): string {
     medium: string;
     low: string;
   } = {
-    high: "#ff4d4f",
-    medium: "#faad14",
-    low: "#f5222d",
+    high: "var(--error)",
+    medium: "var(--warning)",
+    low: "var(--success)",
   };
   return priorities[priority];
 }
@@ -72,8 +75,8 @@ export function setWorkorderStatusColor(value: string): string {
     completed: string;
     "in progress": string;
   } = {
-    completed: "green",
-    "in progress": "#faad14",
+    completed: "var(--success)",
+    "in progress": "var(--warning)",
   };
   return status[value];
 }

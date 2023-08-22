@@ -5,7 +5,7 @@ import {
 } from "../commons/types.tsx";
 import styles from "./Workorders.module.css";
 import type { CollapseProps } from "antd";
-import { Collapse, Badge } from "antd";
+import { Collapse, Badge, Tooltip } from "antd";
 import { CheckCircleTwoTone, CloseCircleTwoTone } from "@ant-design/icons";
 import {
   setWorkorderPriorityColor,
@@ -27,17 +27,19 @@ function Workorders({ assets, users, workorders }: IProps) {
           <div className={styles.labelContainer}>
             <div className={styles.label}>
               <h3>{workorder.title}</h3>
-              <Badge
-                count={workorder.priority}
-                color={setWorkorderPriorityColor(workorder.priority)}
-              />
+              <Tooltip placement="top" title="Priority">
+                <Badge
+                  count={workorder.priority}
+                  color={setWorkorderPriorityColor(workorder.priority)}
+                />
+              </Tooltip>
             </div>
-            <div>
+            <Tooltip placement="top" title="Status">
               <Badge
                 count={workorder.status}
                 color={setWorkorderStatusColor(workorder.status)}
               />
-            </div>
+            </Tooltip>
           </div>
         ),
         children: (
