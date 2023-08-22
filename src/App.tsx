@@ -2,15 +2,20 @@ import Header from "./Header.tsx";
 import Home from "./pages/Home.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import styles from "./App.module.css";
 
 function App() {
   return (
     <BrowserRouter>
       <Header />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+      <main className={styles.background}>
+        <div className={styles.rectangle1} />
+        <div className={styles.rectangle2} />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </main>
     </BrowserRouter>
   );
 }
