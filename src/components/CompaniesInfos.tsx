@@ -83,7 +83,7 @@ function Company({ companyId, companies }: IProps) {
       <Units units={units} />
       <Users users={users} units={units} />
       <Workorders assets={assets} users={users} workorders={workorders} />
-      <Assets assets={assets} companies={companies} />
+      <Assets assets={assets} companies={companies} units={units} />
     </>
   );
 }

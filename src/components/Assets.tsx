@@ -1,4 +1,8 @@
-import { AssetsInterface, CompanyInterface } from "../commons/types.tsx";
+import {
+  AssetsInterface,
+  CompanyInterface,
+  UnitsInterface,
+} from "../commons/types.tsx";
 import { useRef } from "react";
 import * as Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
@@ -9,14 +13,12 @@ import { Metrics, Specifications } from "../commons/types.tsx";
 interface IProps {
   assets: AssetsInterface[];
   companies: CompanyInterface[];
+  units: UnitsInterface[];
 }
 
 const options: Highcharts.Options = {
   title: {
     text: "Health History",
-  },
-  subtitle: {
-    // text: {asset.name}
   },
   yAxis: {
     categories: [
@@ -52,7 +54,7 @@ const options: Highcharts.Options = {
   },
 };
 
-function Assets({ assets, companies }: IProps) {
+function Assets({ assets, companies, units }: IProps) {
   const chartComponentRef = useRef<HighchartsReact.RefObject>(null);
   return (
     <div className="container">
@@ -87,7 +89,8 @@ function Assets({ assets, companies }: IProps) {
               }
             </p>
             <p>
-              <b>Unit:</b> {asset.unitId}
+              <b>Unit:</b>{" "}
+              {units.filter((unit) => unit.id === asset.unitId)[0].name}
             </p>
             <div className={styles.imageContainer}>
               <img
@@ -96,6 +99,7 @@ function Assets({ assets, companies }: IProps) {
                 className={styles.image}
               />
               <div className={styles.assetDetails}>
+                {/* converter de camel case para normal e abstrair em um helper essa funcao e os das cores dos badges */}
                 <p>Specifications:</p>
                 <ul>
                   {Object.keys(asset.specifications).map((key) => (

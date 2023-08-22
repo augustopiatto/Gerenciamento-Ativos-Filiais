@@ -38,7 +38,6 @@ function Workorders({ assets, users, workorders }: IProps) {
       completed: "green",
       "in progress": "#faad14",
     };
-    console.log(status[value]);
     return status[value];
   }
 
