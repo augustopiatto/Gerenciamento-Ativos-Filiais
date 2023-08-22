@@ -1,9 +1,15 @@
 .unitsName {
   list-style-type: none;
-  font-size: 20px;
-  padding: 0px;
+  font-size: 18px;
+  background-color: rgba(200, 200, 200, 0.8);
+  border-radius: 8px;
+  padding: 16px;
 }
 
 .unitsName li {
   margin-bottom: 16px;
+}
+
+.unitsName li:last-child {
+  margin-bottom: 0;
 }

@@ -1,9 +1,3 @@
-.container {
-  background-color: rgba(200, 200, 200, 0.5);
-  padding: 0 16px;
-  border-radius: 8px;
-}
-
 .singleAssetContainer {
   background-color: rgba(200, 200, 200, 0.8);
   display: flex;
@@ -12,6 +6,7 @@
   border-radius: 8px;
   margin-bottom: 16px;
 }
+
 .assetHeader {
   display: flex;
   flex-direction: row;

@@ -7,7 +7,7 @@ interface IProps {
 
 function Users({ units }: IProps) {
   return (
-    <div>
+    <div className="container">
       <h2>Unidades</h2>
       <ul className={styles.unitsName}>
         {!!units.length &&

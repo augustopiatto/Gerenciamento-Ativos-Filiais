@@ -81,10 +81,10 @@ function Company({ companyId, companies }: IProps) {
 
   return (
     <>
-      <Assets assets={assets} companies={companies} />
       <Units units={units} />
       <Users users={users} />
       <Workorders workorders={workorders} />
+      <Assets assets={assets} companies={companies} />
     </>
   );
 }

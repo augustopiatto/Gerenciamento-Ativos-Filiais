@@ -55,7 +55,7 @@ const options: Highcharts.Options = {
 function Assets({ assets, companies }: IProps) {
   const chartComponentRef = useRef<HighchartsReact.RefObject>(null);
   return (
-    <div className={styles.container}>
+    <div className="container">
       <h2>Assets</h2>
       {!!assets.length &&
         assets.map((asset) => (
