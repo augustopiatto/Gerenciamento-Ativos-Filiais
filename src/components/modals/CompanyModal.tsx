@@ -15,18 +15,21 @@ function CompanyModal({ isCompanyOpen, setIsCompanyOpen }: IProps) {
 
   const [form] = Form.useForm();
 
-  function addName(companyName: string): void {
-    const ids: number[] = companies.map(
-      (company: CompanyInterface) => company.id
-    );
-    const lastId: number = Math.max(...ids);
-    const newCompanies: CompanyInterface[] = [
-      ...companies,
-      { id: lastId + 1, name: companyName },
-    ];
-    setCompanies(newCompanies);
-    setIsCompanyOpen(false);
-    form.resetFields();
+  async function addName(): Promise<void> {
+    const { errorFields } = await form.validateFields();
+    if (!errorFields) {
+      const ids: number[] = companies.map(
+        (company: CompanyInterface) => company.id
+      );
+      const lastId: number = Math.max(...ids);
+      const newCompanies: CompanyInterface[] = [
+        ...companies,
+        { id: lastId + 1, name: companyName },
+      ];
+      setCompanies(newCompanies);
+      setIsCompanyOpen(false);
+      form.resetFields();
+    }
   }
 
   return (
@@ -34,7 +37,7 @@ function CompanyModal({ isCompanyOpen, setIsCompanyOpen }: IProps) {
       title="Add a company"
       open={isCompanyOpen}
       onOk={() => {
-        addName(companyName);
+        addName();
       }}
       onCancel={() => {
         setIsCompanyOpen(false);

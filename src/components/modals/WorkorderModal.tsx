@@ -50,7 +50,6 @@ function WorkorderModal({ isWorkorderOpen, setIsWorkorderOpen }: IProps) {
       setWorkorders(newWorkorders);
       setIsWorkorderOpen(false);
       form.resetFields();
-      console.log("newWorkorders", newWorkorders);
     }
   }
   function selectAsset(value: number) {

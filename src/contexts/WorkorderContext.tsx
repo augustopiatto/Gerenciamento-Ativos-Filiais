@@ -23,7 +23,6 @@ export const WorkorderStorage = ({ children }) => {
     try {
       const response = await api.get("workorders");
       setWorkorders(response.data);
-      console.log("workorders", response.data);
     } catch (error) {
       console.log(error);
     }
