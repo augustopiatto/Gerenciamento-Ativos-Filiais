@@ -20,7 +20,7 @@ p {
   margin: 0;
 }
 
-li,
+ul > li,
 p,
 h3,
 h4 {
