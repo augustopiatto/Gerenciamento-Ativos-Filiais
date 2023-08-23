@@ -29,8 +29,6 @@ function UnitModal({ isUnitOpen, setIsUnitOpen }: IProps) {
       ];
       setUnits(newUnits);
       setIsUnitOpen(false);
-      setUnitName("");
-      console.log(newUnits);
     }
   }
 

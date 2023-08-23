@@ -32,15 +32,13 @@ function UserModal({ isUserOpen, setIsUserOpen }: IProps) {
         {
           companyId: companyId,
           email: userEmail,
-          id: lastId,
+          id: lastId + 1,
           name: userName,
           unitId: userUnitId,
         },
       ];
       setUsers(newUsers);
       setIsUserOpen(false);
-      setUserName("");
-      console.log(newUsers);
     }
   }
 

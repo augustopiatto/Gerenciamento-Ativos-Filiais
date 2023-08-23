@@ -19,6 +19,9 @@ function Users() {
             key={user.id}
           >
             <p className={styles.email}>
+              <b>Name:</b> {user.name}
+            </p>
+            <p className={styles.email}>
               <b>E-mail:</b> {user.email}
             </p>
             <p>
