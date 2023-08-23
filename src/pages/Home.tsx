@@ -1,34 +1,22 @@
 import React from "react";
-import { api } from "../api/axios";
 import { Select } from "antd";
 import CompaniesInfos from "../components/CompaniesInfos.tsx";
 import styles from "./Home.module.css";
 import { CompanyInterface } from "../commons/types.tsx";
 import AddInfo from "../components/AddInfo.tsx";
+import { CompanyContext } from "../contexts/CompanyContext.tsx";
 
 function Home() {
-  const [companies, setCompanies] = React.useState<CompanyInterface[]>([]);
-  const [options, setOptions] = React.useState<
-    { label: string; value: number }[]
-  >([]);
   const [filteredCompanyId, setFilteredCompanyId] = React.useState<
     number | null
   >(null);
 
-  async function getCompanies(): Promise<void> {
-    try {
-      const response = await api.get("companies");
-      setCompanies(response.data);
-      const companiesObj = response.data.map(
-        (company: { id: number; name: string }) => {
-          return { label: company.name, value: company.id };
-        }
-      );
-      setOptions(companiesObj);
-    } catch (error) {
-      console.log(error);
+  const { companies, getCompanies } = React.useContext(CompanyContext);
+  const options: { label: string; value: number }[] = companies.map(
+    (company: { id: number; name: string }) => {
+      return { label: company.name, value: company.id };
     }
-  }
+  );
 
   function selectCompany(value: number) {
     const companyId: number = companies.filter(

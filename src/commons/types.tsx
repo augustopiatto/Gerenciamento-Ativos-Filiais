@@ -7,8 +7,8 @@ export interface UserInterface {
 }
 
 export interface CompanyInterface {
-  id?: number;
-  name?: string;
+  id: number;
+  name: string;
 }
 
 interface HealthHistory {
