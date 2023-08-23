@@ -1,5 +1,6 @@
 import {
   AssetsInterface,
+  CompanyInterface,
   UsersInterface,
   WorkordersInterface,
 } from "../commons/types.tsx";
@@ -14,11 +15,12 @@ import {
 
 interface IProps {
   assets: AssetsInterface[];
+  companies: CompanyInterface[];
   users: UsersInterface[];
   workorders: WorkordersInterface[];
 }
 
-function Workorders({ assets, users, workorders }: IProps) {
+function Workorders({ assets, companies, users, workorders }: IProps) {
   const workordersItems: CollapseProps["items"] = workorders.map(
     (workorder) => {
       return {
@@ -44,6 +46,17 @@ function Workorders({ assets, users, workorders }: IProps) {
         ),
         children: (
           <div className={styles.detailsContainer}>
+            <p>
+              <b>Company: </b>
+              {
+                companies.filter(
+                  (company) =>
+                    company.id ===
+                    assets.filter((asset) => asset.id === workorder.assetId)[0]
+                      .companyId
+                )[0].name
+              }
+            </p>
             <p>
               <b>Asset: </b>
               {assets.filter((asset) => asset.id === workorder.assetId)[0].name}

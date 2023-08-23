@@ -94,9 +94,14 @@ function Company({ companyId, companies }: IProps) {
       )}
       {!loading && (
         <div>
-          <Units units={units} />
-          <Users users={users} units={units} />
-          <Workorders assets={assets} users={users} workorders={workorders} />
+          <Units companies={companies} units={units} />
+          <Users companies={companies} users={users} units={units} />
+          <Workorders
+            assets={assets}
+            companies={companies}
+            users={users}
+            workorders={workorders}
+          />
           <Assets assets={assets} companies={companies} units={units} />
         </div>
       )}

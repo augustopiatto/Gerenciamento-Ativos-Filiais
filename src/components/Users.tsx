@@ -1,12 +1,17 @@
-import { UnitsInterface, UsersInterface } from "../commons/types.tsx";
+import {
+  CompanyInterface,
+  UnitsInterface,
+  UsersInterface,
+} from "../commons/types.tsx";
 import styles from "./Users.module.css";
 
 interface IProps {
+  companies: CompanyInterface[];
   users: UsersInterface[];
   units: UnitsInterface[];
 }
 
-function Users({ users, units }: IProps) {
+function Users({ companies, users, units }: IProps) {
   return (
     <div className="container">
       <h2>Users</h2>
@@ -21,7 +26,11 @@ function Users({ users, units }: IProps) {
             </p>
             <p>
               <b>Unit:</b>{" "}
-              {units.filter((unit) => unit.id === user.unitId)[0].name}
+              {units.filter((unit) => unit.id === user.unitId)[0].name} -{" "}
+              {
+                companies.filter((company) => company.id === user.companyId)[0]
+                  .name
+              }
             </p>
           </div>
         ))}
