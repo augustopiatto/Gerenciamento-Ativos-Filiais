@@ -1,10 +1,10 @@
 import React from "react";
 import { api } from "../api/axios";
-import { Button, Select } from "antd";
+import { Select } from "antd";
 import CompaniesInfos from "../components/CompaniesInfos.tsx";
 import styles from "./Home.module.css";
 import { CompanyInterface } from "../commons/types.tsx";
-import { PlusOutlined } from "@ant-design/icons";
+import AddInfo from "../components/AddInfo.tsx";
 
 function Home() {
   const [companies, setCompanies] = React.useState<CompanyInterface[]>([]);
@@ -30,7 +30,7 @@ function Home() {
     }
   }
 
-  function onChange(value: number) {
+  function selectCompany(value: number) {
     const companyId: number = companies.filter(
       (company: CompanyInterface) => company.id === value
     )[0].id;
@@ -50,29 +50,13 @@ function Home() {
           showSearch
           placeholder="Filter by company"
           options={options}
-          onChange={onChange}
+          onChange={selectCompany}
           filterOption={(input, option) =>
             (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
           }
         />
       </div>
-      <div className={styles.addInfo}>
-        <Button type="default" icon={<PlusOutlined />}>
-          Company
-        </Button>
-        <Button type="default" icon={<PlusOutlined />}>
-          Unit
-        </Button>
-        <Button type="default" icon={<PlusOutlined />}>
-          User
-        </Button>
-        <Button type="default" icon={<PlusOutlined />}>
-          Workorder
-        </Button>
-        <Button type="default" icon={<PlusOutlined />}>
-          Asset
-        </Button>
-      </div>
+      <AddInfo />
       <CompaniesInfos companyId={filteredCompanyId} companies={companies} />
     </div>
   );

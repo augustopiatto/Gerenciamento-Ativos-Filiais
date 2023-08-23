@@ -1,0 +1,7 @@
+.addInfo {
+  padding: 16px;
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: -19px; /** margin do h2 */
+}
