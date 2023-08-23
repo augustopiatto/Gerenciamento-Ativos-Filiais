@@ -5,11 +5,11 @@ import Units from "./Units";
 import Users from "./Users";
 import Workorders from "./Workorders";
 import {
-  AssetsInterface,
+  AssetInterface,
   CompanyInterface,
-  UnitsInterface,
-  UsersInterface,
-  WorkordersInterface,
+  UnitInterface,
+  UserInterface,
+  WorkorderInterface,
 } from "../commons/types";
 import { Spin } from "antd";
 import styles from "./CompaniesInfo.module.css";
@@ -20,10 +20,10 @@ interface IProps {
 }
 
 function Company({ companyId, companies }: IProps) {
-  const [assets, setAssets] = React.useState<AssetsInterface[]>([]);
-  const [units, setUnits] = React.useState<UnitsInterface[]>([]);
-  const [users, setUsers] = React.useState<UsersInterface[]>([]);
-  const [workorders, setWorkorders] = React.useState<WorkordersInterface[]>([]);
+  const [assets, setAssets] = React.useState<AssetInterface[]>([]);
+  const [units, setUnits] = React.useState<UnitInterface[]>([]);
+  const [users, setUsers] = React.useState<UserInterface[]>([]);
+  const [workorders, setWorkorders] = React.useState<WorkorderInterface[]>([]);
   const [loading, setLoading] = React.useState<boolean>(false);
 
   const getCompanyInfos = React.useCallback(
@@ -50,28 +50,28 @@ function Company({ companyId, companies }: IProps) {
         setLoading(false);
       }
       if (assetsResponse) {
-        let companyAssets: AssetsInterface[] = assetsResponse.data;
+        let companyAssets: AssetInterface[] = assetsResponse.data;
         if (companyId) {
           companyAssets = companyAssets.filter(
-            (user: AssetsInterface) => user.companyId === companyId
+            (user: AssetInterface) => user.companyId === companyId
           );
         }
         setAssets(companyAssets);
       }
       if (usersResponse) {
-        let companyUsers: UsersInterface[] = usersResponse.data;
+        let companyUsers: UserInterface[] = usersResponse.data;
         if (companyId) {
           companyUsers = companyUsers.filter(
-            (user: UsersInterface) => user.companyId === companyId
+            (user: UserInterface) => user.companyId === companyId
           );
         }
         setUsers(companyUsers);
       }
       if (unitsResponse) {
-        let companyUnits: UnitsInterface[] = unitsResponse.data;
+        let companyUnits: UnitInterface[] = unitsResponse.data;
         if (companyId) {
           companyUnits = companyUnits.filter(
-            (unit: UnitsInterface) => unit.companyId === companyId
+            (unit: UnitInterface) => unit.companyId === companyId
           );
         }
         setUnits(companyUnits);

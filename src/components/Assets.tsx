@@ -1,7 +1,7 @@
 import {
-  AssetsInterface,
+  AssetInterface,
   CompanyInterface,
-  UnitsInterface,
+  UnitInterface,
 } from "../commons/types.tsx";
 import { useRef } from "react";
 import * as Highcharts from "highcharts";
@@ -16,9 +16,9 @@ import {
 } from "../helpers/helpers.tsx";
 
 interface IProps {
-  assets: AssetsInterface[];
+  assets: AssetInterface[];
   companies: CompanyInterface[];
-  units: UnitsInterface[];
+  units: UnitInterface[];
 }
 
 function Assets({ assets, companies, units }: IProps) {
@@ -62,7 +62,7 @@ function Assets({ assets, companies, units }: IProps) {
 
   const chartComponentRef = useRef<HighchartsReact.RefObject>(null);
 
-  function changeParams(options: Highcharts.Options, asset: AssetsInterface) {
+  function changeParams(options: Highcharts.Options, asset: AssetInterface) {
     const status: {
       [key: string]: number;
       unplannedStop: number;

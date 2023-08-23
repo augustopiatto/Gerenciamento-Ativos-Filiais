@@ -1,4 +1,4 @@
-export interface UsersInterface {
+export interface UserInterface {
   companyId: number;
   email: string;
   id: number;
@@ -28,7 +28,7 @@ export interface Specifications {
   rpm?: number | null;
 }
 
-export interface AssetsInterface {
+export interface AssetInterface {
   assignedUserIds: number[];
   companyId: number;
   healthHistory: HealthHistory[];
@@ -44,7 +44,7 @@ export interface AssetsInterface {
   unitId: number;
 }
 
-export interface UnitsInterface {
+export interface UnitInterface {
   companyId: number;
   id: number;
   name: string;
@@ -55,7 +55,7 @@ interface Checklist {
   task: string;
 }
 
-export interface WorkordersInterface {
+export interface WorkorderInterface {
   assetId: number;
   assignedUserIds: number[];
   checklist: Checklist[];

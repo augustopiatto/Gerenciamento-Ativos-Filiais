@@ -1,9 +1,10 @@
 import React from "react";
 import { api } from "../api/axios";
-import { Select } from "antd";
+import { Button, Select } from "antd";
 import CompaniesInfos from "../components/CompaniesInfos.tsx";
 import styles from "./Home.module.css";
 import { CompanyInterface } from "../commons/types.tsx";
+import { PlusOutlined } from "@ant-design/icons";
 
 function Home() {
   const [companies, setCompanies] = React.useState<CompanyInterface[]>([]);
@@ -47,13 +48,30 @@ function Home() {
         <Select
           className={styles.selectBox}
           showSearch
-          placeholder="Select company"
+          placeholder="Filter by company"
           options={options}
           onChange={onChange}
           filterOption={(input, option) =>
             (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
           }
         />
+      </div>
+      <div className={styles.addInfo}>
+        <Button type="default" icon={<PlusOutlined />}>
+          Company
+        </Button>
+        <Button type="default" icon={<PlusOutlined />}>
+          Unit
+        </Button>
+        <Button type="default" icon={<PlusOutlined />}>
+          User
+        </Button>
+        <Button type="default" icon={<PlusOutlined />}>
+          Workorder
+        </Button>
+        <Button type="default" icon={<PlusOutlined />}>
+          Asset
+        </Button>
       </div>
       <CompaniesInfos companyId={filteredCompanyId} companies={companies} />
     </div>

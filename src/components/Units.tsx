@@ -1,9 +1,9 @@
-import { CompanyInterface, UnitsInterface } from "../commons/types.tsx";
+import { CompanyInterface, UnitInterface } from "../commons/types.tsx";
 import styles from "./Units.module.css";
 
 interface IProps {
   companies: CompanyInterface[];
-  units: UnitsInterface[];
+  units: UnitInterface[];
 }
 
 function Users({ companies, units }: IProps) {

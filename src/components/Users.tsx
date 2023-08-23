@@ -1,14 +1,14 @@
 import {
   CompanyInterface,
-  UnitsInterface,
-  UsersInterface,
+  UnitInterface,
+  UserInterface,
 } from "../commons/types.tsx";
 import styles from "./Users.module.css";
 
 interface IProps {
   companies: CompanyInterface[];
-  users: UsersInterface[];
-  units: UnitsInterface[];
+  users: UserInterface[];
+  units: UnitInterface[];
 }
 
 function Users({ companies, users, units }: IProps) {

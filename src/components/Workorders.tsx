@@ -1,8 +1,8 @@
 import {
-  AssetsInterface,
+  AssetInterface,
   CompanyInterface,
-  UsersInterface,
-  WorkordersInterface,
+  UserInterface,
+  WorkorderInterface,
 } from "../commons/types.tsx";
 import styles from "./Workorders.module.css";
 import type { CollapseProps } from "antd";
@@ -14,10 +14,10 @@ import {
 } from "../helpers/helpers.tsx";
 
 interface IProps {
-  assets: AssetsInterface[];
+  assets: AssetInterface[];
   companies: CompanyInterface[];
-  users: UsersInterface[];
-  workorders: WorkordersInterface[];
+  users: UserInterface[];
+  workorders: WorkorderInterface[];
 }
 
 function Workorders({ assets, companies, users, workorders }: IProps) {
