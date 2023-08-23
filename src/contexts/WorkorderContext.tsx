@@ -19,7 +19,7 @@ export const WorkorderStorage = ({ children }) => {
 
   async function getWorkorders(): Promise<void> {
     try {
-      const response = await api.get("companies");
+      const response = await api.get("workorders");
       setWorkorders(response.data);
     } catch (error) {
       console.log(error);

@@ -1,89 +1,77 @@
-import { api } from "../api/axios";
 import React from "react";
 import Assets from "./Assets";
 import Units from "./Units";
 import Users from "./Users";
 import Workorders from "./Workorders";
-import {
-  AssetInterface,
-  CompanyInterface,
-  UnitInterface,
-  UserInterface,
-  WorkorderInterface,
-} from "../commons/types";
+import { CompanyInterface } from "../commons/types";
 import { Spin } from "antd";
 import styles from "./CompaniesInfo.module.css";
+import { UnitContext } from "../contexts/UnitContext";
+import { UserContext } from "../contexts/UserContext";
+import { AssetContext } from "../contexts/AssetContext";
+import { WorkorderContext } from "../contexts/WorkorderContext";
 
 interface IProps {
   companyId: number | null;
   companies: CompanyInterface[];
 }
 
-function Company({ companyId, companies }: IProps) {
-  const [assets, setAssets] = React.useState<AssetInterface[]>([]);
-  const [units, setUnits] = React.useState<UnitInterface[]>([]);
-  const [users, setUsers] = React.useState<UserInterface[]>([]);
-  const [workorders, setWorkorders] = React.useState<WorkorderInterface[]>([]);
+function Company({ companies }: IProps) {
+  const { assets, getAssets } = React.useContext(AssetContext);
+  const { units, getUnits } = React.useContext(UnitContext);
+  const { users, getUsers } = React.useContext(UserContext);
+  const { workorders, getWorkorders } = React.useContext(WorkorderContext);
+
   const [loading, setLoading] = React.useState<boolean>(false);
 
   const getCompanyInfos = React.useCallback(
     async function (): Promise<void> {
-      setLoading(false);
-      let assetsResponse;
-      let usersResponse;
-      let unitsResponse;
-      let workordersResponse;
       try {
         setLoading(true);
-        [assetsResponse, usersResponse, unitsResponse, workordersResponse] =
-          await Promise.all([
-            api.get("assets").catch(() => console.log("assetsApiFetchError")),
-            api.get("users").catch(() => console.log("usersApiFetchError")),
-            api.get("units").catch(() => console.log("unitsApiFetchError")),
-            api
-              .get("workorders")
-              .catch(() => console.log("workordersApiFetchError")),
-          ]);
+        await getAssets();
+        await getUnits();
+        await getUsers();
+        await getWorkorders();
       } catch (error) {
         console.log(error);
       } finally {
         setLoading(false);
       }
-      if (assetsResponse) {
-        let companyAssets: AssetInterface[] = assetsResponse.data;
-        if (companyId) {
-          companyAssets = companyAssets.filter(
-            (user: AssetInterface) => user.companyId === companyId
-          );
-        }
-        setAssets(companyAssets);
-      }
-      if (usersResponse) {
-        let companyUsers: UserInterface[] = usersResponse.data;
-        if (companyId) {
-          companyUsers = companyUsers.filter(
-            (user: UserInterface) => user.companyId === companyId
-          );
-        }
-        setUsers(companyUsers);
-      }
-      if (unitsResponse) {
-        let companyUnits: UnitInterface[] = unitsResponse.data;
-        if (companyId) {
-          companyUnits = companyUnits.filter(
-            (unit: UnitInterface) => unit.companyId === companyId
-          );
-        }
-        setUnits(companyUnits);
-      }
-      if (workordersResponse) setWorkorders(workordersResponse.data);
+      // if (assets) {
+      //   let companyAssets: AssetInterface[] = assets;
+      //   if (companyId) {
+      //     companyAssets = companyAssets.filter(
+      //       (user: AssetInterface) => user.companyId === companyId
+      //     );
+      //   }
+      //   setAssets(companyAssets);
+      // }
+      // if (users) {
+      //   let companyUsers: UserInterface[] = users;
+      //   if (companyId) {
+      //     companyUsers = companyUsers.filter(
+      //       (user: UserInterface) => user.companyId === companyId
+      //     );
+      //   }
+      //   setUsers(companyUsers);
+      // }
+      // if (units) {
+      //   let companyUnits: UnitInterface[] = units;
+      //   if (companyId) {
+      //     companyUnits = companyUnits.filter(
+      //       (unit: UnitInterface) => unit.companyId === companyId
+      //     );
+      //   }
+      //   setUnits(companyUnits);
+      // }
+      // if (workorders) setWorkorders(workorders);
     },
-    [companyId]
+    [getAssets, getUnits, getUsers, getWorkorders]
   );
 
   React.useEffect(() => {
     getCompanyInfos();
-  }, [getCompanyInfos]);
+  }, []);
 
   return (
     <>
@@ -94,15 +82,10 @@ function Company({ companyId, companies }: IProps) {
       )}
       {!loading && (
         <div>
-          <Units companies={companies} units={units} />
-          <Users companies={companies} users={users} units={units} />
-          <Workorders
-            assets={assets}
-            companies={companies}
-            users={users}
-            workorders={workorders}
-          />
-          <Assets assets={assets} companies={companies} units={units} />
+          <Units />
+          <Users />
+          <Workorders />
+          <Assets />
         </div>
       )}
     </>

@@ -1,9 +1,3 @@
-import {
-  AssetInterface,
-  CompanyInterface,
-  UserInterface,
-  WorkorderInterface,
-} from "../commons/types.tsx";
 import styles from "./Workorders.module.css";
 import type { CollapseProps } from "antd";
 import { Collapse, Badge, Tooltip } from "antd";
@@ -12,15 +6,18 @@ import {
   setWorkorderPriorityColor,
   setWorkorderStatusColor,
 } from "../helpers/helpers.tsx";
+import React from "react";
+import { WorkorderContext } from "../contexts/WorkorderContext.tsx";
+import { UserContext } from "../contexts/UserContext.tsx";
+import { CompanyContext } from "../contexts/CompanyContext.tsx";
+import { AssetContext } from "../contexts/AssetContext.tsx";
 
-interface IProps {
-  assets: AssetInterface[];
-  companies: CompanyInterface[];
-  users: UserInterface[];
-  workorders: WorkorderInterface[];
-}
+function Workorders() {
+  const { assets } = React.useContext(AssetContext);
+  const { companies } = React.useContext(CompanyContext);
+  const { users } = React.useContext(UserContext);
+  const { workorders } = React.useContext(WorkorderContext);
 
-function Workorders({ assets, companies, users, workorders }: IProps) {
   const workordersItems: CollapseProps["items"] = workorders.map(
     (workorder) => {
       return {

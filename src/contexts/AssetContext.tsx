@@ -19,7 +19,7 @@ export const AssetStorage = ({ children }) => {
 
   async function getAssets(): Promise<void> {
     try {
-      const response = await api.get("companies");
+      const response = await api.get("assets");
       setAssets(response.data);
     } catch (error) {
       console.log(error);

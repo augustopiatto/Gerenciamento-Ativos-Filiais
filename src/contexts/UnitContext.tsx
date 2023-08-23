@@ -4,12 +4,14 @@ import { api } from "../api/axios";
 
 interface Context {
   units: UnitInterface[];
+  unitsSelectOptions: { label: string; value: number }[];
   setUnits: (value: UnitInterface[]) => void;
   getUnits: () => void;
 }
 
 export const UnitContext = React.createContext<Context>({
   units: [],
+  unitsSelectOptions: [],
   setUnits: () => {},
   getUnits: () => {},
 });
@@ -19,15 +21,23 @@ export const UnitStorage = ({ children }) => {
 
   async function getUnits(): Promise<void> {
     try {
-      const response = await api.get("companies");
+      const response = await api.get("units");
       setUnits(response.data);
     } catch (error) {
       console.log(error);
     }
   }
 
+  const unitsSelectOptions: { label: string; value: number }[] = units.map(
+    (unit: UnitInterface) => {
+      return { label: unit.name, value: unit.id };
+    }
+  );
+
   return (
-    <UnitContext.Provider value={{ units, setUnits, getUnits }}>
+    <UnitContext.Provider
+      value={{ units, unitsSelectOptions, setUnits, getUnits }}
+    >
       {children}
     </UnitContext.Provider>
   );

@@ -1,17 +1,14 @@
-import {
-  CompanyInterface,
-  UnitInterface,
-  UserInterface,
-} from "../commons/types.tsx";
+import React from "react";
+import { CompanyContext } from "../contexts/CompanyContext.tsx";
 import styles from "./Users.module.css";
+import { UnitContext } from "../contexts/UnitContext.tsx";
+import { UserContext } from "../contexts/UserContext.tsx";
 
-interface IProps {
-  companies: CompanyInterface[];
-  users: UserInterface[];
-  units: UnitInterface[];
-}
+function Users() {
+  const { companies } = React.useContext(CompanyContext);
+  const { units } = React.useContext(UnitContext);
+  const { users } = React.useContext(UserContext);
 
-function Users({ companies, users, units }: IProps) {
   return (
     <div className="container">
       <h2>Users</h2>

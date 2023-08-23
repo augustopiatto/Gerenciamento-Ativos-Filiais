@@ -1,10 +1,17 @@
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import { PlusOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 import styles from "./AddInfo.module.css";
 import CompanyModal from "./modals/CompanyModal.tsx";
+import UnitModal from "./modals/UnitModal.tsx";
+import { UnitContext } from "../contexts/UnitContext.tsx";
+import UserModal from "./modals/UserModal.tsx";
+import WorkorderModal from "./modals/WorkorderModal.tsx";
+import AssetModal from "./modals/AssetModal.tsx";
 
 function AddInfo() {
+  const { units } = React.useContext(UnitContext);
+
   const [isCompanyOpen, setIsCompanyOpen] = React.useState<boolean>(false);
   const [isUnitOpen, setIsUnitOpen] = React.useState<boolean>(false);
   const [isUserOpen, setIsUserOpen] = React.useState<boolean>(false);
@@ -13,20 +20,20 @@ function AddInfo() {
 
   function openModal(modalName: string): void {
     const modals: {
-      [key: string]: void;
-      company: void;
-      unit: void;
-      user: void;
-      workorder: void;
-      asset: void;
+      [key: string]: Dispatch<SetStateAction<boolean>>;
+      company: Dispatch<SetStateAction<boolean>>;
+      unit: Dispatch<SetStateAction<boolean>>;
+      user: Dispatch<SetStateAction<boolean>>;
+      workorder: Dispatch<SetStateAction<boolean>>;
+      asset: Dispatch<SetStateAction<boolean>>;
     } = {
-      company: setIsCompanyOpen(true),
-      unit: setIsUnitOpen(true),
-      user: setIsUserOpen(true),
-      workorder: setIsWorkorderOpen(true),
-      asset: setIsAssetOpen(true),
+      company: setIsCompanyOpen,
+      unit: setIsUnitOpen,
+      user: setIsUserOpen,
+      workorder: setIsWorkorderOpen,
+      asset: setIsAssetOpen,
     };
-    modals[modalName];
+    modals[modalName](true);
   }
 
   return (
@@ -40,22 +47,53 @@ function AddInfo() {
       >
         Company
       </Button>
-      <Button type="default" icon={<PlusOutlined />}>
+      <Button
+        type="default"
+        icon={<PlusOutlined />}
+        onClick={() => {
+          openModal("unit");
+        }}
+      >
         Unit
       </Button>
-      <Button type="default" icon={<PlusOutlined />}>
+      <Button
+        type="default"
+        icon={<PlusOutlined />}
+        onClick={() => {
+          openModal("user");
+        }}
+      >
         User
       </Button>
-      <Button type="default" icon={<PlusOutlined />}>
+      <Button
+        type="default"
+        icon={<PlusOutlined />}
+        onClick={() => {
+          openModal("workorder");
+        }}
+      >
         Workorder
       </Button>
-      <Button type="default" icon={<PlusOutlined />}>
+      <Button
+        type="default"
+        icon={<PlusOutlined />}
+        onClick={() => {
+          openModal("asset");
+        }}
+      >
         Asset
       </Button>
       <CompanyModal
         isCompanyOpen={isCompanyOpen}
         setIsCompanyOpen={setIsCompanyOpen}
       />
+      <UnitModal isUnitOpen={isUnitOpen} setIsUnitOpen={setIsUnitOpen} />
+      <UserModal isUserOpen={isUserOpen} setIsUserOpen={setIsUserOpen} />
+      <WorkorderModal
+        isWorkorderOpen={isWorkorderOpen}
+        setIsWorkorderOpen={setIsWorkorderOpen}
+      />
+      <AssetModal isAssetOpen={isAssetOpen} setIsAssetOpen={setIsAssetOpen} />
     </div>
   );
 }

@@ -19,7 +19,7 @@ export const UserStorage = ({ children }) => {
 
   async function getUsers(): Promise<void> {
     try {
-      const response = await api.get("companies");
+      const response = await api.get("users");
       setUsers(response.data);
     } catch (error) {
       console.log(error);

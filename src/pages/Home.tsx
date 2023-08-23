@@ -11,12 +11,8 @@ function Home() {
     number | null
   >(null);
 
-  const { companies, getCompanies } = React.useContext(CompanyContext);
-  const options: { label: string; value: number }[] = companies.map(
-    (company: { id: number; name: string }) => {
-      return { label: company.name, value: company.id };
-    }
-  );
+  const { companies, companiesSelectOptions, getCompanies } =
+    React.useContext(CompanyContext);
 
   function selectCompany(value: number) {
     const companyId: number = companies.filter(
@@ -37,7 +33,7 @@ function Home() {
           className={styles.selectBox}
           showSearch
           placeholder="Filter by company"
-          options={options}
+          options={companiesSelectOptions}
           onChange={selectCompany}
           filterOption={(input, option) =>
             (option?.label ?? "").toLowerCase().includes(input.toLowerCase())

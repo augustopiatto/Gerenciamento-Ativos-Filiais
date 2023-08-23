@@ -1,9 +1,7 @@
 import {
   AssetInterface,
-  CompanyInterface,
-  UnitInterface,
 } from "../commons/types.tsx";
-import { useRef } from "react";
+import React, { useRef } from "react";
 import * as Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import styles from "./Assets.module.css";
@@ -14,14 +12,15 @@ import {
   assetSpecificationsUnit,
   assetMetricUnit,
 } from "../helpers/helpers.tsx";
+import { UnitContext } from "../contexts/UnitContext.tsx";
+import { CompanyContext } from "../contexts/CompanyContext.tsx";
+import { AssetContext } from "../contexts/AssetContext.tsx";
 
-interface IProps {
-  assets: AssetInterface[];
-  companies: CompanyInterface[];
-  units: UnitInterface[];
-}
+function Assets() {
+  const { assets } = React.useContext(AssetContext);
+  const { companies } = React.useContext(CompanyContext);
+  const { units } = React.useContext(UnitContext);
 
-function Assets({ assets, companies, units }: IProps) {
   const options: Highcharts.Options = {
     title: {
       text: "Health History",
