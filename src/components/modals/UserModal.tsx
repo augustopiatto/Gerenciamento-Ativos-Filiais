@@ -22,7 +22,7 @@ function UserModal({ isUserOpen, setIsUserOpen }: IProps) {
 
   const [form] = Form.useForm();
 
-  async function addUnit(userName: string): Promise<void> {
+  async function addUser(): Promise<void> {
     const { errorFields } = await form.validateFields();
     if (!errorFields) {
       const ids: number[] = users.map((user: UserInterface) => user.id);
@@ -39,6 +39,7 @@ function UserModal({ isUserOpen, setIsUserOpen }: IProps) {
       ];
       setUsers(newUsers);
       setIsUserOpen(false);
+      form.resetFields();
     }
   }
 
@@ -55,7 +56,7 @@ function UserModal({ isUserOpen, setIsUserOpen }: IProps) {
       title="Add a unit"
       open={isUserOpen}
       onOk={() => {
-        addUnit(userName);
+        addUser();
       }}
       onCancel={() => {
         setIsUserOpen(false);

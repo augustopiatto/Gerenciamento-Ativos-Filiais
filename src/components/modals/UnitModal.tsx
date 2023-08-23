@@ -18,7 +18,7 @@ function UnitModal({ isUnitOpen, setIsUnitOpen }: IProps) {
 
   const [form] = Form.useForm();
 
-  async function addUnit(unitName: string): Promise<void> {
+  async function addUnit(): Promise<void> {
     const { errorFields } = await form.validateFields();
     if (!errorFields) {
       const ids: number[] = units.map((unit: UnitInterface) => unit.id);
@@ -29,6 +29,7 @@ function UnitModal({ isUnitOpen, setIsUnitOpen }: IProps) {
       ];
       setUnits(newUnits);
       setIsUnitOpen(false);
+      form.resetFields();
     }
   }
 
@@ -41,7 +42,7 @@ function UnitModal({ isUnitOpen, setIsUnitOpen }: IProps) {
       title="Add a unit"
       open={isUnitOpen}
       onOk={() => {
-        addUnit(unitName);
+        addUnit();
       }}
       onCancel={() => {
         setIsUnitOpen(false);

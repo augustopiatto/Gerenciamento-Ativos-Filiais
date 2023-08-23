@@ -4,14 +4,11 @@ import { Button } from "antd";
 import styles from "./AddInfo.module.css";
 import CompanyModal from "./modals/CompanyModal.tsx";
 import UnitModal from "./modals/UnitModal.tsx";
-import { UnitContext } from "../contexts/UnitContext.tsx";
 import UserModal from "./modals/UserModal.tsx";
 import WorkorderModal from "./modals/WorkorderModal.tsx";
 import AssetModal from "./modals/AssetModal.tsx";
 
 function AddInfo() {
-  const { units } = React.useContext(UnitContext);
-
   const [isCompanyOpen, setIsCompanyOpen] = React.useState<boolean>(false);
   const [isUnitOpen, setIsUnitOpen] = React.useState<boolean>(false);
   const [isUserOpen, setIsUserOpen] = React.useState<boolean>(false);

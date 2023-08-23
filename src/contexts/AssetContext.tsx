@@ -4,12 +4,14 @@ import { api } from "../api/axios";
 
 interface Context {
   assets: AssetInterface[];
+  assetsSelectOptions: { label: string; value: number }[];
   setAssets: (value: AssetInterface[]) => void;
   getAssets: () => void;
 }
 
 export const AssetContext = React.createContext<Context>({
   assets: [],
+  assetsSelectOptions: [],
   setAssets: () => {},
   getAssets: () => {},
 });
@@ -26,8 +28,16 @@ export const AssetStorage = ({ children }) => {
     }
   }
 
+  const assetsSelectOptions: { label: string; value: number }[] = assets.map(
+    (asset: AssetInterface) => {
+      return { label: asset.name, value: asset.id };
+    }
+  );
+
   return (
-    <AssetContext.Provider value={{ assets, setAssets, getAssets }}>
+    <AssetContext.Provider
+      value={{ assets, assetsSelectOptions, setAssets, getAssets }}
+    >
       {children}
     </AssetContext.Provider>
   );

@@ -74,9 +74,11 @@ export function setWorkorderStatusColor(value: string): string {
     [key: string]: string;
     completed: string;
     "in progress": string;
+    waiting: string;
   } = {
     completed: "var(--success)",
     "in progress": "var(--warning)",
+    waiting: "var(--error)",
   };
   return status[value];
 }

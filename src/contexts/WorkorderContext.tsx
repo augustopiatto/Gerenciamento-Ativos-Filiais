@@ -4,12 +4,14 @@ import { api } from "../api/axios";
 
 interface Context {
   workorders: WorkorderInterface[];
+  tasksSelectOptions: { label: string; value: string }[];
   setWorkorders: (value: WorkorderInterface[]) => void;
   getWorkorders: () => void;
 }
 
 export const WorkorderContext = React.createContext<Context>({
   workorders: [],
+  tasksSelectOptions: [],
   setWorkorders: () => {},
   getWorkorders: () => {},
 });
@@ -21,14 +23,29 @@ export const WorkorderStorage = ({ children }) => {
     try {
       const response = await api.get("workorders");
       setWorkorders(response.data);
+      console.log("workorders", response.data);
     } catch (error) {
       console.log(error);
     }
   }
 
+  const comparative: string[] = [];
+  const tasksSelectOptions: { label: string; value: string }[] = [];
+  for (let i = 0; i < workorders.length; i++) {
+    for (let j = 0; j < workorders[i].checklist.length; j++) {
+      if (!comparative.includes(workorders[i].checklist[j].task)) {
+        comparative.push(workorders[i].checklist[j].task);
+        tasksSelectOptions.push({
+          label: workorders[i].checklist[j].task,
+          value: workorders[i].checklist[j].task,
+        });
+      }
+    }
+  }
+
   return (
     <WorkorderContext.Provider
-      value={{ workorders, setWorkorders, getWorkorders }}
+      value={{ workorders, tasksSelectOptions, setWorkorders, getWorkorders }}
     >
       {children}
     </WorkorderContext.Provider>

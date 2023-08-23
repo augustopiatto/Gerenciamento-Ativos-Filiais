@@ -28,10 +28,12 @@ function Company({ companies }: IProps) {
     async function (): Promise<void> {
       try {
         setLoading(true);
-        await getAssets();
-        await getUnits();
-        await getUsers();
-        await getWorkorders();
+        await Promise.all([
+          getAssets(),
+          getUnits(),
+          getUsers(),
+          getWorkorders(),
+        ]);
       } catch (error) {
         console.log(error);
       } finally {

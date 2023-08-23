@@ -50,7 +50,7 @@ export interface UnitInterface {
   name: string;
 }
 
-interface Checklist {
+export interface Checklist {
   completed: boolean;
   task: string;
 }

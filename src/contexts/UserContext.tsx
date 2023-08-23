@@ -4,12 +4,14 @@ import { api } from "../api/axios";
 
 interface Context {
   users: UserInterface[];
+  usersSelectOptions: { label: string; value: number }[];
   setUsers: (value: UserInterface[]) => void;
   getUsers: () => void;
 }
 
 export const UserContext = React.createContext<Context>({
   users: [],
+  usersSelectOptions: [],
   setUsers: () => {},
   getUsers: () => {},
 });
@@ -26,8 +28,16 @@ export const UserStorage = ({ children }) => {
     }
   }
 
+  const usersSelectOptions: { label: string; value: number }[] = users.map(
+    (user: UserInterface) => {
+      return { label: user.name, value: user.id };
+    }
+  );
+
   return (
-    <UserContext.Provider value={{ users, setUsers, getUsers }}>
+    <UserContext.Provider
+      value={{ users, usersSelectOptions, setUsers, getUsers }}
+    >
       {children}
     </UserContext.Provider>
   );

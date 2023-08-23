@@ -1,4 +1,4 @@
-import { Modal, Input } from "antd";
+import { Form, Modal, Input } from "antd";
 import React from "react";
 import { CompanyContext } from "../../contexts/CompanyContext";
 import { CompanyInterface } from "../../commons/types";
@@ -13,6 +13,8 @@ function CompanyModal({ isCompanyOpen, setIsCompanyOpen }: IProps) {
 
   const [companyName, setCompanyName] = React.useState<string>("");
 
+  const [form] = Form.useForm();
+
   function addName(companyName: string): void {
     const ids: number[] = companies.map(
       (company: CompanyInterface) => company.id
@@ -24,7 +26,7 @@ function CompanyModal({ isCompanyOpen, setIsCompanyOpen }: IProps) {
     ];
     setCompanies(newCompanies);
     setIsCompanyOpen(false);
-    setCompanyName("");
+    form.resetFields();
   }
 
   return (
@@ -38,13 +40,20 @@ function CompanyModal({ isCompanyOpen, setIsCompanyOpen }: IProps) {
         setIsCompanyOpen(false);
       }}
     >
-      <Input
-        placeholder="Company name"
-        value={companyName}
-        onChange={({ target }) => {
-          setCompanyName(target.value);
-        }}
-      ></Input>
+      <Form form={form}>
+        <Form.Item
+          label="Company name"
+          name="companyName"
+          rules={[{ required: true, message: "Company is required" }]}
+        >
+          <Input
+            value={companyName}
+            onChange={({ target }) => {
+              setCompanyName(target.value);
+            }}
+          />
+        </Form.Item>
+      </Form>
     </Modal>
   );
 }
