@@ -78,6 +78,5 @@ O projeto possui as seguintes funcionalidades:
 O projeto inclui os seguintes scripts:
 
 - `npm run dev`: Inicia o servidor de desenvolvimento
-- `npm run build`: Builda o aplicativo pronto para produção
+- `npm run build`: Builda o aplicativo pronto para produção - `https://augustopiatto.github.io/Tractian-ProcessoSeletivo/`
 - `npm run lint`: Linta e corrige os arquivos
--
