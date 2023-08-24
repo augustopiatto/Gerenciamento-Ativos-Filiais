@@ -17,7 +17,7 @@ import { AssetContext } from "../contexts/AssetContext.tsx";
 function Assets() {
   const { assets } = React.useContext(AssetContext);
   const { companies } = React.useContext(CompanyContext);
-  const { units } = React.useContext(UnitContext);
+  const { allUnits } = React.useContext(UnitContext);
 
   const options: Highcharts.Options = {
     title: {
@@ -126,7 +126,7 @@ function Assets() {
             </p>
             <p>
               <b>Unit:</b>{" "}
-              {units.filter((unit) => unit.id === asset.unitId)[0].name}
+              {allUnits.filter((unit) => unit.id === asset.unitId)[0].name}
             </p>
             <div className={styles.imageContainer}>
               <img

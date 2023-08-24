@@ -10,7 +10,8 @@ interface IProps {
 }
 
 function UnitModal({ isUnitOpen, setIsUnitOpen }: IProps) {
-  const { units, setUnits } = React.useContext(UnitContext);
+  const { allUnits, setAllUnits, setFilteredUnits } =
+    React.useContext(UnitContext);
   const { companiesSelectOptions } = React.useContext(CompanyContext);
 
   const [unitName, setUnitName] = React.useState<string>("");
@@ -21,13 +22,14 @@ function UnitModal({ isUnitOpen, setIsUnitOpen }: IProps) {
   async function addUnit(): Promise<void> {
     const { errorFields } = await form.validateFields();
     if (!errorFields) {
-      const ids: number[] = units.map((unit: UnitInterface) => unit.id);
+      const ids: number[] = allUnits.map((unit: UnitInterface) => unit.id);
       const lastId: number = Math.max(...ids);
       const newUnits: UnitInterface[] = [
-        ...units,
+        ...allUnits,
         { companyId: companyId, id: lastId + 1, name: unitName },
       ];
-      setUnits(newUnits);
+      setAllUnits(newUnits);
+      setFilteredUnits(newUnits);
       setIsUnitOpen(false);
       form.resetFields();
     }

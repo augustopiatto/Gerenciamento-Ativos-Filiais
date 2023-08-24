@@ -6,7 +6,7 @@ import { UserContext } from "../contexts/UserContext.tsx";
 
 function Users() {
   const { companies } = React.useContext(CompanyContext);
-  const { units } = React.useContext(UnitContext);
+  const { allUnits } = React.useContext(UnitContext);
   const { users } = React.useContext(UserContext);
 
   return (
@@ -26,7 +26,7 @@ function Users() {
             </p>
             <p>
               <b>Unit:</b>{" "}
-              {units.filter((unit) => unit.id === user.unitId)[0].name} -{" "}
+              {allUnits.filter((unit) => unit.id === user.unitId)[0].name} -{" "}
               {
                 companies.filter((company) => company.id === user.companyId)[0]
                   .name

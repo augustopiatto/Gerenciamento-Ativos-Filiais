@@ -9,11 +9,9 @@ import { UnitContext } from "../contexts/UnitContext";
 import { UserContext } from "../contexts/UserContext";
 import { AssetContext } from "../contexts/AssetContext";
 import { WorkorderContext } from "../contexts/WorkorderContext";
-import { CompanyContext } from "../contexts/CompanyContext";
 
 function Company() {
   const { getAssets } = React.useContext(AssetContext);
-  const { filteredCompanyId } = React.useContext(CompanyContext);
   const { getUnits } = React.useContext(UnitContext);
   const { getUsers } = React.useContext(UserContext);
   const { getWorkorders } = React.useContext(WorkorderContext);
@@ -33,7 +31,7 @@ function Company() {
 
   React.useEffect(() => {
     getCompanyInfos();
-  }, [filteredCompanyId]);
+  }, []);
 
   return (
     <>
