@@ -2,7 +2,7 @@
 
 ## Visão Geral do Projeto
 
-Este é um projeto que usa React, Typescript, Vite, VITEST? e STORYBOOK?. É uma stack de desenvolvimento web moderna que é rápida e eficiente para construir aplicativos web escaláveis.
+Este é um projeto que usa React, Typescript, Vite e AntDesign. É uma stack de desenvolvimento web moderna que é rápida e eficiente para construir aplicativos web escaláveis.
 
 ## Preview
 
@@ -21,6 +21,27 @@ Para iniciar o projeto, siga os passos abaixo:
 - Execute `npm run dev` para iniciar o servidor de desenvolvimento
 - Abra seu navegador e acesse `http://localhost:5173/` para ver a aplicação funcionando
 
+## Estrutura de pasta
+
+.
+├── dist                   # Arquivos compilados
+├── public                 # Assets públicos
+├── src                    # Código fonte
+│   ├── api                # API (nesse caso mock da API)
+│   ├── assets             # Assets estáticos
+│   │   ├── styles         # Estilos gerais
+│   ├── commons            # Códigos reutilizáveis
+│   ├── components         # Componentes reutilizáveis
+|   |   ├── tests          # Testes unitários dos componentes usando Vitest
+│   ├── contexts           # Separação de contexts
+│   ├── pages              # Componentes de página
+│   ├── App.vue            # Componente raiz
+│   └── main.ts            # Entry point
+├── tsconfig.json          # Configuração do TypeScript
+├── package.json           # Dependências e scripts
+├── vite.config.ts         # Configuração do Vite
+└── README.md              # Documentação do projeto
+
 ## Tecnologias e Funcionalidades
 
 ### Tecnologias
@@ -34,8 +55,6 @@ O projeto inclui as seguintes tecnologias:
 - Ant Design como biblioteca para UI.
 - Axios para chamadas HTTP.
 - React router DOM para Client Side Routing.
-- STORYBOOK?
-- VITEST?
 
 ### Funcionalidades
 
@@ -44,10 +63,8 @@ O projeto possui as seguintes funcionalidades:
 - Hooks
 - React Router
 - useContext
-- PropTypes
 - Componentes Funcionais
 - Eventos
--
 
 ## Scripts
 
