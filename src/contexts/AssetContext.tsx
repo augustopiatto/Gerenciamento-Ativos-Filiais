@@ -28,6 +28,7 @@ export const AssetStorage = ({ children }) => {
     try {
       const response = await api.get("assets");
       setAssets(response.data);
+      console.log(response.data);
     } catch (error) {
       console.log(error);
     }
@@ -41,15 +42,17 @@ export const AssetStorage = ({ children }) => {
 
   const comparativeStatus: string[] = [];
   const assetStatusSelectOptions: { label: string; value: string }[] = [];
-  assets.forEach((asset: AssetInterface) => {
-    if (!comparativeStatus.includes(asset.status)) {
-      comparativeStatus.push(asset.status);
-      assetStatusSelectOptions.push({
-        label: convertFromCamelCase(asset.status),
-        value: asset.status,
-      });
+  for (let i = 0; i < assets.length; i++) {
+    for (let j = 0; j < assets[i].healthHistory.length; j++) {
+      if (!comparativeStatus.includes(assets[i].healthHistory[j].status)) {
+        comparativeStatus.push(assets[i].healthHistory[j].status);
+        assetStatusSelectOptions.push({
+          label: convertFromCamelCase(assets[i].healthHistory[j].status),
+          value: assets[i].healthHistory[j].status,
+        });
+      }
     }
-  });
+  }
 
   const comparativeSensors: string[] = [];
   const sensorsSelectOptions: { label: string; value: string }[] = [];
