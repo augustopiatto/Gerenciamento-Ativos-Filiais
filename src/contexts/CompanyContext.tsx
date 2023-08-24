@@ -6,7 +6,7 @@ interface Context {
   companies: CompanyInterface[];
   companiesSelectOptions: { label: string; value: number }[];
   filteredCompanyId: number | null;
-  setFilteredCompanyId: (value: number) => void;
+  setFilteredCompanyId: (value: number | null) => void;
   setCompanies: (value: CompanyInterface[]) => void;
   getCompanies: () => void;
 }

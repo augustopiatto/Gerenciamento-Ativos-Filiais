@@ -15,9 +15,12 @@ function Home() {
   } = React.useContext(CompanyContext);
 
   function selectCompany(value: number) {
-    const companyId: number = companies.filter(
-      (company: CompanyInterface) => company.id === value
-    )[0].id;
+    let companyId: number | null = null;
+    if (value) {
+      companyId = companies.filter(
+        (company: CompanyInterface) => company.id === value
+      )[0].id;
+    }
     setFilteredCompanyId(companyId);
   }
 
@@ -32,6 +35,7 @@ function Home() {
         <Select
           className={styles.selectBox}
           showSearch
+          allowClear
           placeholder="Filter by company"
           options={companiesSelectOptions}
           onChange={selectCompany}
