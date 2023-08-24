@@ -2,38 +2,49 @@ import React from "react";
 import { AssetInterface } from "../commons/types";
 import { api } from "../api/axios";
 import { convertFromCamelCase } from "../helpers/helpers";
+import { CompanyContext } from "./CompanyContext";
 
 interface Context {
-  assets: AssetInterface[];
+  allAssets: AssetInterface[];
+  filteredAssets: AssetInterface[];
   assetsSelectOptions: { label: string; value: number }[];
   assetStatusSelectOptions: { label: string; value: string }[];
   sensorsSelectOptions: { label: string; value: string }[];
-  setAssets: (value: AssetInterface[]) => void;
+  setAllAssets: (value: AssetInterface[]) => void;
+  setFilteredAssets: (value: AssetInterface[]) => void;
   getAssets: () => void;
 }
 
 export const AssetContext = React.createContext<Context>({
-  assets: [],
+  allAssets: [],
+  filteredAssets: [],
   assetsSelectOptions: [],
   assetStatusSelectOptions: [],
   sensorsSelectOptions: [],
-  setAssets: () => {},
+  setAllAssets: () => {},
+  setFilteredAssets: () => {},
   getAssets: () => {},
 });
 
 export const AssetStorage = ({ children }) => {
-  const [assets, setAssets] = React.useState<AssetInterface[]>([]);
+  const [allAssets, setAllAssets] = React.useState<AssetInterface[]>([]);
+  const [filteredAssets, setFilteredAssets] = React.useState<AssetInterface[]>(
+    []
+  );
+
+  const { filteredCompanyId } = React.useContext(CompanyContext);
 
   async function getAssets(): Promise<void> {
     try {
       const response = await api.get("assets");
-      setAssets(response.data);
+      setAllAssets(response.data);
+      setFilteredAssets(response.data);
     } catch (error) {
       console.log(error);
     }
   }
 
-  const assetsSelectOptions: { label: string; value: number }[] = assets.map(
+  const assetsSelectOptions: { label: string; value: number }[] = allAssets.map(
     (asset: AssetInterface) => {
       return { label: asset.name, value: asset.id };
     }
@@ -41,13 +52,13 @@ export const AssetStorage = ({ children }) => {
 
   const comparativeStatus: string[] = [];
   const assetStatusSelectOptions: { label: string; value: string }[] = [];
-  for (let i = 0; i < assets.length; i++) {
-    for (let j = 0; j < assets[i].healthHistory.length; j++) {
-      if (!comparativeStatus.includes(assets[i].healthHistory[j].status)) {
-        comparativeStatus.push(assets[i].healthHistory[j].status);
+  for (let i = 0; i < allAssets.length; i++) {
+    for (let j = 0; j < allAssets[i].healthHistory.length; j++) {
+      if (!comparativeStatus.includes(allAssets[i].healthHistory[j].status)) {
+        comparativeStatus.push(allAssets[i].healthHistory[j].status);
         assetStatusSelectOptions.push({
-          label: convertFromCamelCase(assets[i].healthHistory[j].status),
-          value: assets[i].healthHistory[j].status,
+          label: convertFromCamelCase(allAssets[i].healthHistory[j].status),
+          value: allAssets[i].healthHistory[j].status,
         });
       }
     }
@@ -55,26 +66,39 @@ export const AssetStorage = ({ children }) => {
 
   const comparativeSensors: string[] = [];
   const sensorsSelectOptions: { label: string; value: string }[] = [];
-  for (let i = 0; i < assets.length; i++) {
-    for (let j = 0; j < assets[i].sensors.length; j++) {
-      if (!comparativeSensors.includes(assets[i].sensors[j])) {
-        comparativeSensors.push(assets[i].sensors[j]);
+  for (let i = 0; i < allAssets.length; i++) {
+    for (let j = 0; j < allAssets[i].sensors.length; j++) {
+      if (!comparativeSensors.includes(allAssets[i].sensors[j])) {
+        comparativeSensors.push(allAssets[i].sensors[j]);
         sensorsSelectOptions.push({
-          label: assets[i].sensors[j],
-          value: assets[i].sensors[j],
+          label: allAssets[i].sensors[j],
+          value: allAssets[i].sensors[j],
         });
       }
     }
   }
 
+  React.useEffect(() => {
+    const newAssets = allAssets.filter(
+      (asset) => asset.companyId === filteredCompanyId
+    );
+    if (filteredCompanyId) {
+      setFilteredAssets(newAssets);
+    } else {
+      setFilteredAssets(allAssets);
+    }
+  }, [filteredCompanyId]);
+
   return (
     <AssetContext.Provider
       value={{
-        assets,
+        allAssets,
+        filteredAssets,
         assetsSelectOptions,
         assetStatusSelectOptions,
         sensorsSelectOptions,
-        setAssets,
+        setAllAssets,
+        setFilteredAssets,
         getAssets,
       }}
     >

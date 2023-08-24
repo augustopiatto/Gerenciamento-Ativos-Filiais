@@ -15,7 +15,7 @@ import { CompanyContext } from "../contexts/CompanyContext.tsx";
 import { AssetContext } from "../contexts/AssetContext.tsx";
 
 function Assets() {
-  const { assets } = React.useContext(AssetContext);
+  const { filteredAssets } = React.useContext(AssetContext);
   const { companies } = React.useContext(CompanyContext);
   const { allUnits } = React.useContext(UnitContext);
 
@@ -89,8 +89,8 @@ function Assets() {
   return (
     <div className="container">
       <h2>Assets</h2>
-      {!!assets.length &&
-        assets.map((asset) => (
+      {!!filteredAssets.length &&
+        filteredAssets.map((asset) => (
           <div
             key={asset.id}
             className={`${styles.singleAssetContainer} info-background-color`}

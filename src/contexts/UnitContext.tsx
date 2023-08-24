@@ -47,7 +47,7 @@ export const UnitStorage = ({ children }) => {
     const newUnits = allUnits.filter(
       (unit) => unit.companyId === filteredCompanyId
     );
-    if (newUnits.length) {
+    if (filteredCompanyId) {
       setFilteredUnits(newUnits);
     } else {
       setFilteredUnits(allUnits);

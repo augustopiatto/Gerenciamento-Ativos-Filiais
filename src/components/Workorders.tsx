@@ -13,7 +13,7 @@ import { CompanyContext } from "../contexts/CompanyContext.tsx";
 import { AssetContext } from "../contexts/AssetContext.tsx";
 
 function Workorders() {
-  const { assets } = React.useContext(AssetContext);
+  const { allAssets } = React.useContext(AssetContext);
   const { companies } = React.useContext(CompanyContext);
   const { allUsers } = React.useContext(UserContext);
   const { workorders } = React.useContext(WorkorderContext);
@@ -49,14 +49,18 @@ function Workorders() {
                 companies.filter(
                   (company) =>
                     company.id ===
-                    assets.filter((asset) => asset.id === workorder.assetId)[0]
-                      .companyId
+                    allAssets.filter(
+                      (asset) => asset.id === workorder.assetId
+                    )[0].companyId
                 )[0].name
               }
             </p>
             <p>
               <b>Asset: </b>
-              {assets.filter((asset) => asset.id === workorder.assetId)[0].name}
+              {
+                allAssets.filter((asset) => asset.id === workorder.assetId)[0]
+                  .name
+              }
             </p>
             <p>
               <b>Description: </b>

@@ -47,7 +47,7 @@ export const UserStorage = ({ children }) => {
     const newUsers = allUsers.filter(
       (user) => user.companyId === filteredCompanyId
     );
-    if (newUsers.length) {
+    if (filteredCompanyId) {
       setFilteredUsers(newUsers);
     } else {
       setFilteredUsers(allUsers);

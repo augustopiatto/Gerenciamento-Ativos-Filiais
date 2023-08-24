@@ -24,8 +24,13 @@ interface IProps {
 }
 
 function AssetModal({ isAssetOpen, setIsAssetOpen }: IProps) {
-  const { assets, assetStatusSelectOptions, sensorsSelectOptions, setAssets } =
-    React.useContext(AssetContext);
+  const {
+    allAssets,
+    assetStatusSelectOptions,
+    sensorsSelectOptions,
+    setAllAssets,
+    setFilteredAssets,
+  } = React.useContext(AssetContext);
   const { companiesSelectOptions } = React.useContext(CompanyContext);
   const { usersSelectOptions } = React.useContext(UserContext);
 
@@ -55,10 +60,12 @@ function AssetModal({ isAssetOpen, setIsAssetOpen }: IProps) {
   async function addAsset(): Promise<void> {
     const { errorFields } = await form.validateFields();
     if (!errorFields) {
-      const ids: number[] = assets.map((company: AssetInterface) => company.id);
+      const ids: number[] = allAssets.map(
+        (company: AssetInterface) => company.id
+      );
       const lastId: number = Math.max(...ids);
       const newAssets: AssetInterface[] = [
-        ...assets,
+        ...allAssets,
         {
           assignedUserIds: assignedUsers,
           companyId: companyId,
@@ -89,7 +96,8 @@ function AssetModal({ isAssetOpen, setIsAssetOpen }: IProps) {
           unitId: 1,
         },
       ];
-      setAssets(newAssets);
+      setAllAssets(newAssets);
+      setFilteredAssets(newAssets);
       setIsAssetOpen(false);
       form.resetFields();
     }
