@@ -30,7 +30,6 @@ export const UnitStorage = ({ children }) => {
       const response = await api.get("units");
       let companyUnits = response.data;
       setAllUnits(companyUnits);
-      console.log(filteredCompanyId);
       if (filteredCompanyId) {
         companyUnits = companyUnits.filter(
           (unit: UnitInterface) => unit.companyId === filteredCompanyId

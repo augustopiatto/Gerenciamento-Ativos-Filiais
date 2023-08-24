@@ -11,7 +11,7 @@ interface IProps {
 }
 
 function UserModal({ isUserOpen, setIsUserOpen }: IProps) {
-  const { users, setUsers } = React.useContext(UserContext);
+  const { allUsers, setAllUsers } = React.useContext(UserContext);
   const { companiesSelectOptions } = React.useContext(CompanyContext);
   const { unitsSelectOptions } = React.useContext(UnitContext);
 
@@ -25,10 +25,10 @@ function UserModal({ isUserOpen, setIsUserOpen }: IProps) {
   async function addUser(): Promise<void> {
     const { errorFields } = await form.validateFields();
     if (!errorFields) {
-      const ids: number[] = users.map((user: UserInterface) => user.id);
+      const ids: number[] = allUsers.map((user: UserInterface) => user.id);
       const lastId: number = Math.max(...ids);
       const newUsers: UserInterface[] = [
-        ...users,
+        ...allUsers,
         {
           companyId: companyId,
           email: userEmail,
@@ -37,7 +37,7 @@ function UserModal({ isUserOpen, setIsUserOpen }: IProps) {
           unitId: userUnitId,
         },
       ];
-      setUsers(newUsers);
+      setAllUsers(newUsers);
       setIsUserOpen(false);
       form.resetFields();
     }
