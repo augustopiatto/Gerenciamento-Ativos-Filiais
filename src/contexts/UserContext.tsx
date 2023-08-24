@@ -1,5 +1,5 @@
 import React from "react";
-import { UserInterface } from "../commons/types";
+import { ReactNodeInterface, UserInterface } from "../commons/types";
 import { api } from "../api/axios";
 import { CompanyContext } from "./CompanyContext";
 
@@ -21,7 +21,7 @@ export const UserContext = React.createContext<Context>({
   getUsers: () => {},
 });
 
-export const UserStorage = ({ children }) => {
+export const UserStorage = ({ children }: ReactNodeInterface) => {
   const [allUsers, setAllUsers] = React.useState<UserInterface[]>([]);
   const [filteredUsers, setFilteredUsers] = React.useState<UserInterface[]>([]);
 

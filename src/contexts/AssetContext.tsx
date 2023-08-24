@@ -1,5 +1,5 @@
 import React from "react";
-import { AssetInterface } from "../commons/types";
+import { AssetInterface, ReactNodeInterface } from "../commons/types";
 import { api } from "../api/axios";
 import { convertFromCamelCase } from "../commons/helpers/helpers";
 import { CompanyContext } from "./CompanyContext";
@@ -26,7 +26,7 @@ export const AssetContext = React.createContext<Context>({
   getAssets: () => {},
 });
 
-export const AssetStorage = ({ children }) => {
+export const AssetStorage = ({ children }: ReactNodeInterface) => {
   const [allAssets, setAllAssets] = React.useState<AssetInterface[]>([]);
   const [filteredAssets, setFilteredAssets] = React.useState<AssetInterface[]>(
     []

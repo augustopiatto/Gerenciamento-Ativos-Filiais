@@ -1,3 +1,5 @@
+import React from "react";
+
 export interface UserInterface {
   companyId: number;
   email: string;
@@ -64,4 +66,8 @@ export interface WorkorderInterface {
   priority: string;
   status: string;
   title: string;
+}
+
+export interface ReactNodeInterface {
+  children: React.ReactNode;
 }

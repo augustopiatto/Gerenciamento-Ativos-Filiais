@@ -1,5 +1,5 @@
 import React from "react";
-import { CompanyInterface } from "../commons/types";
+import { CompanyInterface, ReactNodeInterface } from "../commons/types";
 import { api } from "../api/axios";
 
 interface Context {
@@ -20,7 +20,7 @@ export const CompanyContext = React.createContext<Context>({
   getCompanies: () => {},
 });
 
-export const CompanyStorage = ({ children }) => {
+export const CompanyStorage = ({ children }: ReactNodeInterface) => {
   const [companies, setCompanies] = React.useState<CompanyInterface[]>([]);
   const [filteredCompanyId, setFilteredCompanyId] = React.useState<
     number | null

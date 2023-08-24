@@ -1,5 +1,5 @@
 import React from "react";
-import { UnitInterface } from "../commons/types";
+import { UnitInterface, ReactNodeInterface } from "../commons/types";
 import { api } from "../api/axios";
 import { CompanyContext } from "./CompanyContext";
 
@@ -21,7 +21,7 @@ export const UnitContext = React.createContext<Context>({
   getUnits: () => {},
 });
 
-export const UnitStorage = ({ children }) => {
+export const UnitStorage = ({ children }: ReactNodeInterface) => {
   const [allUnits, setAllUnits] = React.useState<UnitInterface[]>([]);
   const [filteredUnits, setFilteredUnits] = React.useState<UnitInterface[]>([]);
 

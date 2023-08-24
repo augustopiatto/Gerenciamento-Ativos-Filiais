@@ -1,5 +1,5 @@
 import React from "react";
-import { WorkorderInterface } from "../commons/types";
+import { ReactNodeInterface, WorkorderInterface } from "../commons/types";
 import { api } from "../api/axios";
 
 interface Context {
@@ -16,7 +16,7 @@ export const WorkorderContext = React.createContext<Context>({
   getWorkorders: () => {},
 });
 
-export const WorkorderStorage = ({ children }) => {
+export const WorkorderStorage = ({ children }: ReactNodeInterface) => {
   const [workorders, setWorkorders] = React.useState<WorkorderInterface[]>([]);
 
   async function getWorkorders(): Promise<void> {
