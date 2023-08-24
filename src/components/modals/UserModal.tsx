@@ -15,10 +15,10 @@ function UserModal({ isUserOpen, setIsUserOpen }: IProps) {
   const { companiesSelectOptions } = React.useContext(CompanyContext);
   const { unitsSelectOptions } = React.useContext(UnitContext);
 
-  const [userName, setUserName] = React.useState<string>("");
-  const [userEmail, setUserEmail] = React.useState<string>("");
-  const [userUnitId, setUserUnitId] = React.useState<number>(0);
   const [companyId, setCompanyId] = React.useState<number>(0);
+  const [userEmail, setUserEmail] = React.useState<string>("");
+  const [userName, setUserName] = React.useState<string>("");
+  const [userUnitId, setUserUnitId] = React.useState<number>(0);
 
   const [form] = Form.useForm();
 
