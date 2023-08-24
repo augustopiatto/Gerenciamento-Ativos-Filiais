@@ -9,7 +9,7 @@ import {
   convertFromCamelCase,
   assetSpecificationsUnit,
   assetMetricUnit,
-} from "../helpers/helpers.tsx";
+} from "../commons/helpers/helpers.tsx";
 import { UnitContext } from "../contexts/UnitContext.tsx";
 import { CompanyContext } from "../contexts/CompanyContext.tsx";
 import { AssetContext } from "../contexts/AssetContext.tsx";

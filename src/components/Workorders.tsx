@@ -5,7 +5,7 @@ import { CheckCircleTwoTone, CloseCircleTwoTone } from "@ant-design/icons";
 import {
   setWorkorderPriorityColor,
   setWorkorderStatusColor,
-} from "../helpers/helpers.tsx";
+} from "../commons/helpers/helpers.tsx";
 import React from "react";
 import { WorkorderContext } from "../contexts/WorkorderContext.tsx";
 import { UserContext } from "../contexts/UserContext.tsx";

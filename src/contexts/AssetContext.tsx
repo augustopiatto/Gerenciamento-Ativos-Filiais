@@ -1,7 +1,7 @@
 import React from "react";
 import { AssetInterface } from "../commons/types";
 import { api } from "../api/axios";
-import { convertFromCamelCase } from "../helpers/helpers";
+import { convertFromCamelCase } from "../commons/helpers/helpers";
 import { CompanyContext } from "./CompanyContext";
 
 interface Context {
