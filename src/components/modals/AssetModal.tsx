@@ -1,4 +1,4 @@
-import { Form, Modal, Input, InputNumber, Select } from "antd";
+import { Form, Modal, Input, InputNumber, Select, Divider } from "antd";
 import React from "react";
 import { AssetInterface } from "../../commons/types";
 import { AssetContext } from "../../contexts/AssetContext";
@@ -23,6 +23,13 @@ function AssetModal({ isAssetOpen, setIsAssetOpen }: IProps) {
   const [model, setModel] = React.useState<string>("");
   const [sensors, setSensors] = React.useState<string[]>([]);
   const [status, setStatus] = React.useState<string>("");
+  const [lastUptimeAt, setLastUptimeAt] = React.useState<string>("");
+  const [totalCollectsUptime, setTotalCollectsUptime] =
+    React.useState<number>(0);
+  const [totalUptime, setTotalUptime] = React.useState<number>(0);
+  const [maxTemp, setMaxTemp] = React.useState<number>(0);
+  const [power, setPower] = React.useState<number>(0);
+  const [rpm, setRpm] = React.useState<number>(0);
 
   const [form] = Form.useForm();
 
@@ -40,11 +47,19 @@ function AssetModal({ isAssetOpen, setIsAssetOpen }: IProps) {
           healthscore: healthscore,
           id: lastId + 1,
           image: "",
-          metrics: {},
+          metrics: {
+            lastUptimeAt: lastUptimeAt,
+            totalCollectsUptime: totalCollectsUptime,
+            totalUptime: totalUptime,
+          },
           model: model,
           name: assetName,
           sensors: sensors,
-          specifications: {},
+          specifications: {
+            maxTemp: maxTemp,
+            power: power,
+            rpm: rpm,
+          },
           status: status,
           unitId: 1,
         },
@@ -53,22 +68,6 @@ function AssetModal({ isAssetOpen, setIsAssetOpen }: IProps) {
       setIsAssetOpen(false);
       form.resetFields();
     }
-  }
-
-  function changeHealthscore(value: number | null) {
-    if (value) setHealthscore(value);
-  }
-
-  function selectCompany(value: number) {
-    setCompanyId(value);
-  }
-
-  function selectStatus(value: string) {
-    setStatus(value);
-  }
-
-  function selectUsers(value: number[]) {
-    setAssignedUsers([...value]);
   }
 
   return (
@@ -116,7 +115,9 @@ function AssetModal({ isAssetOpen, setIsAssetOpen }: IProps) {
             showSearch
             placeholder="Company"
             options={companiesSelectOptions}
-            onChange={selectCompany}
+            onChange={(value: number) => {
+              setCompanyId(value);
+            }}
             filterOption={(input, option) =>
               (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
             }
@@ -131,7 +132,9 @@ function AssetModal({ isAssetOpen, setIsAssetOpen }: IProps) {
             showSearch
             mode="multiple"
             options={usersSelectOptions}
-            onChange={selectUsers}
+            onChange={(value: number[]) => {
+              setAssignedUsers([...value]);
+            }}
             filterOption={(input, option) =>
               (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
             }
@@ -146,7 +149,9 @@ function AssetModal({ isAssetOpen, setIsAssetOpen }: IProps) {
             min={0}
             max={100}
             value={healthscore}
-            onChange={changeHealthscore}
+            onChange={(value: number | null) => {
+              if (value) setHealthscore(value);
+            }}
           />
         </Form.Item>
         <Form.Item
@@ -157,7 +162,9 @@ function AssetModal({ isAssetOpen, setIsAssetOpen }: IProps) {
           <Select
             showSearch
             options={assetStatusSelectOptions}
-            onChange={selectStatus}
+            onChange={(value: string) => {
+              setStatus(value);
+            }}
             filterOption={(input, option) =>
               (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
             }
@@ -178,6 +185,87 @@ function AssetModal({ isAssetOpen, setIsAssetOpen }: IProps) {
             filterOption={(input, option) =>
               (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
             }
+          />
+        </Form.Item>
+        <Divider>Metrics</Divider>
+        <Form.Item
+          label="Last uptime date"
+          name="lastUptimeAt"
+          rules={[{ required: true, message: "Last uptime date is required" }]}
+        >
+          <Input
+            value={lastUptimeAt}
+            onChange={({ target }) => {
+              setLastUptimeAt(target.value);
+            }}
+          />
+        </Form.Item>
+        <Form.Item
+          label="Total collects uptime"
+          name="totalCollectsUptime"
+          rules={[
+            { required: true, message: "Total collects uptime is required" },
+          ]}
+        >
+          <InputNumber
+            min={0}
+            value={totalCollectsUptime}
+            onChange={(value: number | null) => {
+              if (value) setTotalCollectsUptime(value);
+            }}
+          />
+        </Form.Item>
+        <Form.Item
+          label="Total uptime"
+          name="totalUptime"
+          rules={[{ required: true, message: "Total uptime is required" }]}
+        >
+          <InputNumber
+            min={0}
+            value={totalUptime}
+            onChange={(value: number | null) => {
+              if (value) setTotalUptime(value);
+            }}
+          />
+        </Form.Item>
+        <Divider>Specifications</Divider>
+        <Form.Item
+          label="Max temperature"
+          name="maxTemp"
+          rules={[{ required: true, message: "Max temperature is required" }]}
+        >
+          <InputNumber
+            min={0}
+            value={maxTemp}
+            onChange={(value: number | null) => {
+              if (value) setMaxTemp(value);
+            }}
+          />
+        </Form.Item>
+        <Form.Item
+          label="Power"
+          name="power"
+          rules={[{ required: false, message: "Power is required" }]}
+        >
+          <InputNumber
+            min={0}
+            value={power}
+            onChange={(value: number | null) => {
+              if (value) setPower(value);
+            }}
+          />
+        </Form.Item>
+        <Form.Item
+          label="RPM"
+          name="rpm"
+          rules={[{ required: false, message: "RPM is required" }]}
+        >
+          <InputNumber
+            min={0}
+            value={rpm}
+            onChange={(value: number | null) => {
+              if (value) setRpm(value);
+            }}
           />
         </Form.Item>
       </Form>
