@@ -12,6 +12,12 @@ O projeto traz as informações da [fake API da Tractian](https://github.com/tra
 
 #### Home
 
+![image](https://github.com/augustopiatto/Tractian-ProcessoSeletivo/assets/77405968/07f6ebff-547b-48c7-9047-456be73c7fbf)
+
+#### Não encontrada
+
+![image](https://github.com/augustopiatto/Tractian-ProcessoSeletivo/assets/77405968/5c0fd69e-62fa-4d6e-ac4e-befa722f1228)
+
 ## Começando
 
 Para iniciar o projeto, siga os passos abaixo:
