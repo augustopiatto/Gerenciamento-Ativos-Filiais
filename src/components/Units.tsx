@@ -5,14 +5,14 @@ import { CompanyContext } from "../contexts/CompanyContext.tsx";
 
 function Users() {
   const { companies } = React.useContext(CompanyContext);
-  const { filteredUnits } = React.useContext(UnitContext);
+  const { units } = React.useContext(UnitContext);
 
   return (
     <div className="container">
       <h2>Units</h2>
       <ul className={styles.unitsContainer}>
-        {!!filteredUnits.length &&
-          filteredUnits.map((unit) => (
+        {!!units.length &&
+          units.map((unit) => (
             <li
               className={`${styles.unitsName} info-background-color`}
               key={unit.id}

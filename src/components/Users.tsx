@@ -6,14 +6,14 @@ import { UserContext } from "../contexts/UserContext.tsx";
 
 function Users() {
   const { companies } = React.useContext(CompanyContext);
-  const { allUnits } = React.useContext(UnitContext);
-  const { filteredUsers } = React.useContext(UserContext);
+  const { units } = React.useContext(UnitContext);
+  const { users } = React.useContext(UserContext);
 
   return (
     <div className="container">
       <h2>Users</h2>
-      {!!filteredUsers.length &&
-        filteredUsers.map((user) => (
+      {!!users.length &&
+        users.map((user) => (
           <div
             className={`${styles.userContainer} info-background-color`}
             key={user.id}
@@ -26,7 +26,7 @@ function Users() {
             </p>
             <p>
               <b>Unit:</b>{" "}
-              {allUnits.filter((unit) => unit.id === user.unitId)[0].name} -{" "}
+              {units.filter((unit) => unit.id === user.unitId)[0].name} -{" "}
               {
                 companies.filter((company) => company.id === user.companyId)[0]
                   .name

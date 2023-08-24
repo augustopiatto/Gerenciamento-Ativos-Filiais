@@ -15,7 +15,7 @@ import { AssetContext } from "../contexts/AssetContext.tsx";
 function Workorders() {
   const { assets } = React.useContext(AssetContext);
   const { companies } = React.useContext(CompanyContext);
-  const { allUsers } = React.useContext(UserContext);
+  const { users } = React.useContext(UserContext);
   const { workorders } = React.useContext(WorkorderContext);
 
   const workordersItems: CollapseProps["items"] = workorders.map(
@@ -66,10 +66,7 @@ function Workorders() {
               <b>Assigned Users: </b>
               {workorder.assignedUserIds.map((assignedUserId) => (
                 <li key={assignedUserId}>
-                  {
-                    allUsers.filter((user) => user.id === assignedUserId)[0]
-                      .name
-                  }
+                  {users.filter((user) => user.id === assignedUserId)[0].name}
                 </li>
               ))}
             </ul>

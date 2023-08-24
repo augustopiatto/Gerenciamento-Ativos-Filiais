@@ -1,47 +1,34 @@
 import React from "react";
 import { UnitInterface } from "../commons/types";
 import { api } from "../api/axios";
-import { CompanyContext } from "./CompanyContext";
 
 interface Context {
-  allUnits: UnitInterface[];
-  filteredUnits: UnitInterface[];
+  units: UnitInterface[];
   unitsSelectOptions: { label: string; value: number }[];
-  setAllUnits: (value: UnitInterface[]) => void;
+  setUnits: (value: UnitInterface[]) => void;
   getUnits: () => void;
 }
 
 export const UnitContext = React.createContext<Context>({
-  allUnits: [],
-  filteredUnits: [],
+  units: [],
   unitsSelectOptions: [],
-  setAllUnits: () => {},
+  setUnits: () => {},
   getUnits: () => {},
 });
 
 export const UnitStorage = ({ children }) => {
-  const [allUnits, setAllUnits] = React.useState<UnitInterface[]>([]);
-  const [filteredUnits, setFilteredUnits] = React.useState<UnitInterface[]>([]);
-
-  const { filteredCompanyId } = React.useContext(CompanyContext);
+  const [units, setUnits] = React.useState<UnitInterface[]>([]);
 
   async function getUnits(): Promise<void> {
     try {
       const response = await api.get("units");
-      let companyUnits = response.data;
-      setAllUnits(companyUnits);
-      if (filteredCompanyId) {
-        companyUnits = companyUnits.filter(
-          (unit: UnitInterface) => unit.companyId === filteredCompanyId
-        );
-      }
-      setFilteredUnits(companyUnits);
+      setUnits(response.data);
     } catch (error) {
       console.log(error);
     }
   }
 
-  const unitsSelectOptions: { label: string; value: number }[] = allUnits.map(
+  const unitsSelectOptions: { label: string; value: number }[] = units.map(
     (unit: UnitInterface) => {
       return { label: unit.name, value: unit.id };
     }
@@ -49,13 +36,7 @@ export const UnitStorage = ({ children }) => {
 
   return (
     <UnitContext.Provider
-      value={{
-        allUnits,
-        filteredUnits,
-        unitsSelectOptions,
-        setAllUnits,
-        getUnits,
-      }}
+      value={{ units, unitsSelectOptions, setUnits, getUnits }}
     >
       {children}
     </UnitContext.Provider>
