@@ -1,9 +1,22 @@
-import { Form, Modal, Input, InputNumber, Select, Divider } from "antd";
+import {
+  Form,
+  Modal,
+  Input,
+  InputNumber,
+  Select,
+  Divider,
+  Upload,
+  Button,
+} from "antd";
 import React from "react";
 import { AssetInterface } from "../../commons/types";
 import { AssetContext } from "../../contexts/AssetContext";
 import { UserContext } from "../../contexts/UserContext";
 import { CompanyContext } from "../../contexts/CompanyContext";
+import { UploadOutlined } from "@ant-design/icons";
+import type { UploadProps } from "antd";
+import { RcFile } from "antd/es/upload";
+import styles from "./AssetModal.module.css";
 
 interface IProps {
   isAssetOpen: boolean;
@@ -23,6 +36,7 @@ function AssetModal({ isAssetOpen, setIsAssetOpen }: IProps) {
   const [model, setModel] = React.useState<string>("");
   const [sensors, setSensors] = React.useState<string[]>([]);
   const [status, setStatus] = React.useState<string>("");
+  const [image, setImage] = React.useState<string>("");
   const [lastUptimeAt, setLastUptimeAt] = React.useState<string>("");
   const [totalCollectsUptime, setTotalCollectsUptime] =
     React.useState<number>(0);
@@ -30,6 +44,11 @@ function AssetModal({ isAssetOpen, setIsAssetOpen }: IProps) {
   const [maxTemp, setMaxTemp] = React.useState<number>(0);
   const [power, setPower] = React.useState<number>(0);
   const [rpm, setRpm] = React.useState<number>(0);
+  const [status1, setStatus1] = React.useState<string>("");
+  const [status2, setStatus2] = React.useState<string>("");
+  const [status3, setStatus3] = React.useState<string>("");
+  const [status4, setStatus4] = React.useState<string>("");
+  const [status5, setStatus5] = React.useState<string>("");
 
   const [form] = Form.useForm();
 
@@ -43,10 +62,16 @@ function AssetModal({ isAssetOpen, setIsAssetOpen }: IProps) {
         {
           assignedUserIds: assignedUsers,
           companyId: companyId,
-          healthHistory: [],
+          healthHistory: [
+            { status: status1, timestamp: "2022-12-01T00:00:00.000Z" },
+            { status: status2, timestamp: "2022-12-08T00:00:00.000Z" },
+            { status: status3, timestamp: "2022-12-15T00:00:00.000Z" },
+            { status: status4, timestamp: "2022-12-22T00:00:00.000Z" },
+            { status: status5, timestamp: "2022-12-29T00:00:00.000Z" },
+          ],
           healthscore: healthscore,
           id: lastId + 1,
-          image: "",
+          image: image,
           metrics: {
             lastUptimeAt: lastUptimeAt,
             totalCollectsUptime: totalCollectsUptime,
@@ -69,6 +94,25 @@ function AssetModal({ isAssetOpen, setIsAssetOpen }: IProps) {
       form.resetFields();
     }
   }
+
+  const getBase64 = (file: RcFile): Promise<string> =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = (error) => reject(error);
+    });
+
+  const props: UploadProps = {
+    name: "file",
+    fileList: [],
+    beforeUpload: () => false,
+    onChange: async (info) => {
+      const imageFile = info.fileList[0];
+      const url = await getBase64(imageFile.originFileObj as RcFile);
+      setImage(url);
+    },
+  };
 
   return (
     <Modal
@@ -187,6 +231,18 @@ function AssetModal({ isAssetOpen, setIsAssetOpen }: IProps) {
             }
           />
         </Form.Item>
+        <Form.Item
+          label="Image"
+          name="image"
+          rules={[{ required: true, message: "Sensors are required" }]}
+        >
+          {!!image && <p className={styles.sentFile}>File sent</p>}
+          {!image && (
+            <Upload {...props}>
+              <Button icon={<UploadOutlined />}>Upload image</Button>
+            </Upload>
+          )}
+        </Form.Item>
         <Divider>Metrics</Divider>
         <Form.Item
           label="Last uptime date"
@@ -266,6 +322,87 @@ function AssetModal({ isAssetOpen, setIsAssetOpen }: IProps) {
             onChange={(value: number | null) => {
               if (value) setRpm(value);
             }}
+          />
+        </Form.Item>
+        <Divider>Health history</Divider>
+        <Form.Item
+          label="Day 12/01 status"
+          name="status1"
+          rules={[{ required: true, message: "Status is required" }]}
+        >
+          <Select
+            showSearch
+            options={assetStatusSelectOptions}
+            onChange={(value: string) => {
+              setStatus1(value);
+            }}
+            filterOption={(input, option) =>
+              (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
+            }
+          />
+        </Form.Item>
+        <Form.Item
+          label="Day 12/08 status"
+          name="status2"
+          rules={[{ required: true, message: "Status is required" }]}
+        >
+          <Select
+            showSearch
+            options={assetStatusSelectOptions}
+            onChange={(value: string) => {
+              setStatus2(value);
+            }}
+            filterOption={(input, option) =>
+              (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
+            }
+          />
+        </Form.Item>
+        <Form.Item
+          label="Day 12/15 status"
+          name="status3"
+          rules={[{ required: true, message: "Status is required" }]}
+        >
+          <Select
+            showSearch
+            options={assetStatusSelectOptions}
+            onChange={(value: string) => {
+              setStatus3(value);
+            }}
+            filterOption={(input, option) =>
+              (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
+            }
+          />
+        </Form.Item>
+        <Form.Item
+          label="Day 12/22 status"
+          name="status4"
+          rules={[{ required: true, message: "Status is required" }]}
+        >
+          <Select
+            showSearch
+            options={assetStatusSelectOptions}
+            onChange={(value: string) => {
+              setStatus4(value);
+            }}
+            filterOption={(input, option) =>
+              (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
+            }
+          />
+        </Form.Item>
+        <Form.Item
+          label="Day 12/29 status"
+          name="status5"
+          rules={[{ required: true, message: "Status is required" }]}
+        >
+          <Select
+            showSearch
+            options={assetStatusSelectOptions}
+            onChange={(value: string) => {
+              setStatus5(value);
+            }}
+            filterOption={(input, option) =>
+              (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
+            }
           />
         </Form.Item>
       </Form>
