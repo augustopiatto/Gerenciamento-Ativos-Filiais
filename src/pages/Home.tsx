@@ -7,12 +7,12 @@ import AddInfo from "../components/AddInfo.tsx";
 import { CompanyContext } from "../contexts/CompanyContext.tsx";
 
 function Home() {
-  const [filteredCompanyId, setFilteredCompanyId] = React.useState<
-    number | null
-  >(null);
-
-  const { companies, companiesSelectOptions, getCompanies } =
-    React.useContext(CompanyContext);
+  const {
+    companies,
+    companiesSelectOptions,
+    setFilteredCompanyId,
+    getCompanies,
+  } = React.useContext(CompanyContext);
 
   function selectCompany(value: number) {
     const companyId: number = companies.filter(
@@ -41,7 +41,7 @@ function Home() {
         />
       </div>
       <AddInfo />
-      <CompaniesInfos companyId={filteredCompanyId} companies={companies} />
+      <CompaniesInfos />
     </div>
   );
 }

@@ -5,6 +5,8 @@ import { api } from "../api/axios";
 interface Context {
   companies: CompanyInterface[];
   companiesSelectOptions: { label: string; value: number }[];
+  filteredCompanyId: number | null;
+  setFilteredCompanyId: (value: number) => void;
   setCompanies: (value: CompanyInterface[]) => void;
   getCompanies: () => void;
 }
@@ -12,12 +14,17 @@ interface Context {
 export const CompanyContext = React.createContext<Context>({
   companies: [],
   companiesSelectOptions: [],
+  filteredCompanyId: null,
+  setFilteredCompanyId: () => {},
   setCompanies: () => {},
   getCompanies: () => {},
 });
 
 export const CompanyStorage = ({ children }) => {
   const [companies, setCompanies] = React.useState<CompanyInterface[]>([]);
+  const [filteredCompanyId, setFilteredCompanyId] = React.useState<
+    number | null
+  >(null);
 
   async function getCompanies(): Promise<void> {
     try {
@@ -35,7 +42,14 @@ export const CompanyStorage = ({ children }) => {
 
   return (
     <CompanyContext.Provider
-      value={{ companies, companiesSelectOptions, setCompanies, getCompanies }}
+      value={{
+        companies,
+        companiesSelectOptions,
+        filteredCompanyId,
+        setFilteredCompanyId,
+        setCompanies,
+        getCompanies,
+      }}
     >
       {children}
     </CompanyContext.Provider>

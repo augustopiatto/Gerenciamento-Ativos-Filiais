@@ -28,7 +28,6 @@ export const AssetStorage = ({ children }) => {
     try {
       const response = await api.get("assets");
       setAssets(response.data);
-      console.log(response.data);
     } catch (error) {
       console.log(error);
     }
