@@ -23,7 +23,7 @@ Para iniciar o projeto, siga os passos abaixo:
 
 ## Estrutura de pasta
 
-.
+```
 ├── dist                   # Arquivos compilados
 ├── public                 # Assets públicos
 ├── src                    # Código fonte
@@ -41,6 +41,7 @@ Para iniciar o projeto, siga os passos abaixo:
 ├── package.json           # Dependências e scripts
 ├── vite.config.ts         # Configuração do Vite
 └── README.md              # Documentação do projeto
+```
 
 ## Tecnologias e Funcionalidades
 
