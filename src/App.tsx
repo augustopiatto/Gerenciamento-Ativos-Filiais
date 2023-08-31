@@ -1,7 +1,7 @@
 import Header from "./Header.tsx";
 import Home from "./pages/Home.tsx";
 import NotFound from "./pages/NotFound.tsx";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { HashRouter, Route, Routes } from "react-router-dom";
 import styles from "./App.module.css";
 import { CompanyStorage } from "./contexts/CompanyContext.tsx";
 import { UnitStorage } from "./contexts/UnitContext";
@@ -11,7 +11,7 @@ import { AssetStorage } from "./contexts/AssetContext.tsx";
 
 function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <CompanyStorage>
         <AssetStorage>
           <UnitStorage>
@@ -29,7 +29,7 @@ function App() {
           </UnitStorage>
         </AssetStorage>
       </CompanyStorage>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
