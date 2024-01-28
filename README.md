@@ -1,4 +1,4 @@
-# Tractian
+# Gerenciamento de Ativos das Filiais
 
 ## Visão Geral do Projeto
 
@@ -6,7 +6,7 @@ Este é um projeto que usa React, Typescript, Vite e AntDesign. É uma stack de 
 
 ## Preview
 
-O projeto traz as informações da [fake API da Tractian](https://github.com/tractian/fake-api) para visualização dessas informações pelo usuário.
+O projeto traz as informações da [API](https://github.com/tractian/fake-api) para visualização dessas informações pelo usuário.
 
 ### Telas
 
